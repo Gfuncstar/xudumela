@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1779789692">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1780327819">
 <style>
   .leaflet-container { background: #0d0c08; font-family: var(--font-body); }
   .leaflet-tile { filter: brightness(0.78) saturate(0.85) contrast(1.04); }
@@ -201,6 +201,18 @@
   </div>
 </section>
 
+<!-- ============ Cinematic video moment ============ -->
+<section class="video-moment" aria-label="The Delta waits">
+  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/Delta-Scenes.jpg">
+    <source data-src="/assets/videos/hero-twelve.mp4" type="video/mp4">
+  </video>
+  <div class="video-moment-scrim" aria-hidden="true"></div>
+  <div class="video-moment-line">
+    <p class="moment-line"><span class="ml-row">The Delta waits.</span><span class="ml-row italic text-primary">Send a word.</span></p>
+    <p class="moment-sub">We reply within forty-eight hours, in person, with a kit list and a kettle on.</p>
+  </div>
+</section>
+
 <!-- ============ PRACTICAL INFO ============ -->
 <section class="section bg-paper">
   <div class="container">
@@ -233,7 +245,6 @@
 <footer class="site-foot">
   <div class="container">
     <div class="brand-block r-up">
-      <p class="brand-line">Xudumela is a privately‑run conservancy on the Xudum Channel, twenty minutes by road from Maun. Camp sites, safari tents, and the annual Poachella festival fund conservation through the Connect Trust.</p>
       <div class="foot-coords">
         <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
         <span>Okavango Delta · Botswana</span>
@@ -292,7 +303,7 @@
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/prototype/assets/js/site.js?v=1779789692"></script>
+<script src="/prototype/assets/js/site.js?v=1780327819"></script>
 <script>
 (() => {
   const map = L.map('map', { center: [-19.65, 23.1], zoom: 9, scrollWheelZoom: false });
