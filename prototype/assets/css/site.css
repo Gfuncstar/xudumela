@@ -2708,3 +2708,74 @@ section > * > .container { position: relative; z-index: 2; }
 .bg-paper .enquire-aside .ea-block a:hover { color: var(--secondary); }
 .bg-paper .enquire-aside .ea-block { border-bottom-color: var(--rule-dark); }
 
+
+/* ============================================================
+   Sky panel — Sun + Moon section on the Weather page
+   ============================================================ */
+.sky-clock-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 3vw, 2rem);
+  align-items: center;
+  padding: clamp(1.6rem, 3vw, 2.4rem) clamp(1.4rem, 3vw, 2.2rem);
+  border: 1px solid var(--rule);
+  background: rgba(13, 12, 8, 0.4);
+  margin-inline: auto;
+  max-width: 780px;
+}
+.sky-clock-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+.sky-clock {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-light);
+  font-variant-numeric: tabular-nums;
+}
+.sky-clock .secs {
+  font-size: 0.45em;
+  color: var(--text-mute);
+  margin-left: 0.4rem;
+  font-feature-settings: "tnum";
+}
+.sky-state {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  text-align: right;
+}
+.sky-state .state {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+.sky-state .detail {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+.sky-arc {
+  width: 100%;
+  max-width: 100%;
+  height: clamp(110px, 22vw, 180px);
+  display: block;
+}
+.sky-arc [data-arc-body] {
+  filter: drop-shadow(0 0 8px rgba(212, 178, 130, 0.55));
+  transition: cx 1.2s ease-out, cy 1.2s ease-out;
+}
+.sky-section.is-night .sky-arc [data-arc-body],
+.is-night .sky-arc [data-arc-body] {
+  fill: #e8e1cf;
+  filter: drop-shadow(0 0 10px rgba(232, 225, 207, 0.55));
+}
+@media (max-width: 600px) {
+  .sky-state { text-align: left; }
+}

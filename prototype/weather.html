@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1779789692">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1780329722">
 </head>
 <body class="bg-dark">
 
@@ -84,6 +84,93 @@
         <div><span class="k">Sunset</span><span class="v" data-weather-sunset>—</span></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ SUN + MOON ============ -->
+<section class="section bg-deep sky-section" data-contour-on data-sky>
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="sun">↳ Today's sky</span>
+        <h2 class="display-lg mt-2">Sun and moon<br><span class="italic text-primary">over the channel.</span></h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>Times calculated for the camp at 19°16′S, 22°50′E. Dawn drives leave at civil twilight. Sundowner walks meet the sun on the way down.</p>
+      </div>
+    </div>
+
+    <div class="sky-clock-wrap r-up mt-3" data-celestial>
+      <div class="sky-clock-row">
+        <div class="sky-clock" data-clock>—:—</div>
+        <div class="sky-state">
+          <span class="state" data-sun-state>—</span>
+          <span class="detail" data-sun-detail>—</span>
+        </div>
+      </div>
+      <svg class="sky-arc" viewBox="0 0 200 100" aria-hidden="true">
+        <ellipse cx="100" cy="80" rx="85" ry="58" fill="none" stroke="rgba(244,236,225,0.16)" stroke-width="1" stroke-dasharray="2 3"/>
+        <circle data-arc-body cx="15" cy="80" r="7" fill="var(--primary)"/>
+      </svg>
+    </div>
+
+    <div class="info-grid r-up mt-3">
+      <div class="info-cell">
+        <span class="label">Sunrise</span>
+        <span class="value" data-sky-sunrise>—</span>
+        <span class="note">Civil dawn about 25 min earlier.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Solar noon</span>
+        <span class="value" data-sky-noon>—</span>
+        <span class="note">Sun at its highest.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Sunset</span>
+        <span class="value" data-sky-sunset>—</span>
+        <span class="note">Civil dusk about 25 min later.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Day length</span>
+        <span class="value" data-sky-daylength>—</span>
+        <span class="note">From rise to set.</span>
+      </div>
+    </div>
+
+    <div class="info-grid mt-0 r-up" style="border-top:none;">
+      <div class="info-cell">
+        <span class="label">Moon phase</span>
+        <span class="value" data-sky-moonphase>—</span>
+        <span class="note" data-sky-moonillum>—</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Next full moon</span>
+        <span class="value" data-sky-nextfull>—</span>
+        <span class="note">Best for night drives.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Next new moon</span>
+        <span class="value" data-sky-nextnew>—</span>
+        <span class="note">Best for stargazing.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Golden hour</span>
+        <span class="value" data-sky-golden>—</span>
+        <span class="note">Either end of the day.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Cinematic video moment ============ -->
+<section class="video-moment" aria-label="Dawn and dusk on the channel">
+  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/1660413.jpg">
+    <source data-src="/assets/videos/hero-five.mp4" type="video/mp4">
+  </video>
+  <div class="video-moment-scrim" aria-hidden="true"></div>
+  <div class="video-moment-line">
+    <p class="moment-line"><span class="ml-row">Dawn and dusk,</span><span class="ml-row italic text-primary">on the channel.</span></p>
+    <p class="moment-sub">The Delta runs to the sun. Walk the bookends of the day.</p>
   </div>
 </section>
 
@@ -358,7 +445,6 @@
 <footer class="site-foot">
   <div class="container">
     <div class="brand-block r-up">
-      <p class="brand-line">Xudumela is a privately‑run conservancy on the Xudum Channel, twenty minutes by road from Maun. Camp sites, safari tents, and the annual Poachella festival fund conservation through the Connect Trust.</p>
       <div class="foot-coords">
         <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
         <span>Okavango Delta · Botswana</span>
@@ -399,23 +485,12 @@
       </div>
     </div>
 
-    <div class="foot-legal r-up">
-      <a href="/privacy">Privacy policy</a>
-      <a href="/terms">Terms &amp; conditions</a>
-      <a href="/cookies">Cookie policy</a>
-      <a href="/accessibility">Accessibility</a>
-      <a href="/modern-slavery">Modern slavery statement</a>
-      <a href="/sitemap">Sitemap</a>
-    </div>
-
     <div class="foot-bottom">
       <span>© <span data-year>2026</span> Xudumela Conservancy &amp; Camp Grounds</span>
-      <span>VAT BW 1278 4920 11 · BTC Registered</span>
-      <span class="accent">Design by HIEB</span>
     </div>
   </div>
 </footer>
 
-<script src="/prototype/assets/js/site.js?v=1779789692"></script>
+<script src="/prototype/assets/js/site.js?v=1780329722"></script>
 </body>
 </html>

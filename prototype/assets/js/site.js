@@ -241,6 +241,93 @@
     setInterval(place, 60000);
   })();
 
+  // ---- Sky panel (sun + moon detail) — Weather page only
+  (() => {
+    const root = document.querySelector('[data-sky]');
+    if (!root) return;
+    const lat = -19.27, lng = 22.85;
+    const TZ = 'Africa/Gaborone';
+
+    const set = (sel, val) => {
+      const el = root.querySelector(sel);
+      if (el != null && val != null) el.textContent = val;
+    };
+    const pad = n => String(n).padStart(2, '0');
+    const hhmmFromIso = iso => iso.slice(11, 16);
+    const dur = mins => {
+      const h = Math.floor(mins / 60);
+      const m = Math.round(mins - h * 60);
+      return `${h}h ${pad(m)}m`;
+    };
+    const dateLabel = d => d.toLocaleDateString('en-GB', {
+      day: '2-digit', month: 'short', timeZone: TZ,
+    });
+
+    // Moon phase: reference new moon JD 2451550.1 (2000-01-06 18:14 UTC)
+    const moonPhase = (date) => {
+      const jd = date.getTime() / 86400000 + 2440587.5;
+      const synodic = 29.53058867;
+      const p = ((jd - 2451550.1) % synodic + synodic) % synodic / synodic;
+      const illum = (1 - Math.cos(p * 2 * Math.PI)) / 2;
+      const buckets = [
+        [0.03, 'New moon'],
+        [0.22, 'Waxing crescent'],
+        [0.28, 'First quarter'],
+        [0.47, 'Waxing gibbous'],
+        [0.53, 'Full moon'],
+        [0.72, 'Waning gibbous'],
+        [0.78, 'Last quarter'],
+        [0.97, 'Waning crescent'],
+        [1.01, 'New moon'],
+      ];
+      let name = 'New moon';
+      for (const [t, n] of buckets) { if (p <= t) { name = n; break; } }
+      return { phase: p, illum, name };
+    };
+    const nextPhase = (from, target) => {
+      const synodic = 29.53058867;
+      const { phase: now } = moonPhase(from);
+      let dist = (target - now + 1) % 1;
+      if (dist < 0.005) dist += 1;
+      return new Date(from.getTime() + dist * synodic * 86400000);
+    };
+
+    // Moon info doesn't need the network
+    const now = new Date();
+    const m = moonPhase(now);
+    set('[data-sky-moonphase]', m.name);
+    set('[data-sky-moonillum]', Math.round(m.illum * 100) + '% illuminated');
+    set('[data-sky-nextfull]', dateLabel(nextPhase(now, 0.5)));
+    set('[data-sky-nextnew]', dateLabel(nextPhase(now, 0.0)));
+
+    // Sun timings from Open-Meteo
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&daily=sunrise,sunset,daylight_duration&timezone=Africa%2FGaborone&forecast_days=1`;
+    fetch(url, { cache: 'default' })
+      .then(r => r.json())
+      .then(d => {
+        const sr = d.daily?.sunrise?.[0];
+        const ss = d.daily?.sunset?.[0];
+        const dl = d.daily?.daylight_duration?.[0];
+        if (sr) set('[data-sky-sunrise]', hhmmFromIso(sr));
+        if (ss) set('[data-sky-sunset]', hhmmFromIso(ss));
+        if (sr && ss) {
+          const sm = (+sr.slice(11, 13)) * 60 + (+sr.slice(14, 16));
+          const em = (+ss.slice(11, 13)) * 60 + (+ss.slice(14, 16));
+          const noon = (sm + em) / 2;
+          set('[data-sky-noon]', `${pad(Math.floor(noon / 60))}:${pad(Math.round(noon % 60))}`);
+          // Golden hour window: sunrise + 45m and sunset - 45m, rendered as two windows
+          const goldStart1 = sm;
+          const goldEnd1 = sm + 45;
+          const goldStart2 = em - 45;
+          const goldEnd2 = em;
+          const fmt = mins => `${pad(Math.floor(mins / 60))}:${pad(Math.round(mins % 60))}`;
+          set('[data-sky-golden]', `${fmt(goldStart1)}–${fmt(goldEnd1)}  ·  ${fmt(goldStart2)}–${fmt(goldEnd2)}`);
+        }
+        if (dl) set('[data-sky-daylength]', dur(dl / 60));
+      })
+      .catch(() => {});
+  })();
+
   // ---- Live weather (Open-Meteo, no API key)
   (() => {
     const panel = document.querySelector('[data-weather]');
