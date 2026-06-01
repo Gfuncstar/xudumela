@@ -14,12 +14,10 @@ Thumbs.db
 assets/HERO VIDEO/
 assets/videos/_originals/
 
-# Unused legacy clips (not referenced in the prototype, just bloat the repo)
-assets/videos/hero-aerial-delta.mp4
+# Unused legacy clips (not referenced in the prototype)
 assets/videos/hero-buffalo-dusk.mp4
 assets/videos/hero-elephant-close.mp4
 assets/videos/hero-elephant-walking.mp4
 assets/videos/hero-elephants-watering.mp4
 assets/videos/hero-four.mp4
-assets/videos/hero-lion-resting.mp4
 assets/videos/hero-.mp4
