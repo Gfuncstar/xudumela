@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Plan Your Visit — Xudumela · Booking enquiries, contact, directions</title>
+<meta name="description" content="Send a booking enquiry to Xudumela Conservancy. 48‑hour reply. Camp and town‑office locations on the map. No card details required at enquiry.">
+<meta property="og:title" content="Plan Your Visit — Xudumela Conservancy">
+<meta property="og:image" content="/assets/images/Delta-Scenes.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1779789692">
+<style>
+  .leaflet-container { background: #0d0c08; font-family: var(--font-body); }
+  .leaflet-tile { filter: brightness(0.78) saturate(0.85) contrast(1.04); }
+  .leaflet-control-attribution { background: rgba(13,12,8,0.7) !important; color: var(--text-mute) !important; font-family: var(--font-mono); font-size: 9px; }
+  .leaflet-control-attribution a { color: var(--primary) !important; }
+  .leaflet-control-zoom a { background: rgba(13,12,8,0.85) !important; color: var(--text-light) !important; border: 1px solid var(--rule) !important; }
+  .leaflet-control-zoom a:hover { background: var(--primary) !important; color: var(--bg-dark) !important; }
+  .exp-pin { width: 14px; height: 14px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 3px rgba(185,157,117,0.18), 0 0 0 7px rgba(185,157,117,0.08); cursor: pointer; }
+  .exp-pin.main { background: var(--secondary); box-shadow: 0 0 0 3px rgba(83,98,78,0.22), 0 0 0 8px rgba(83,98,78,0.1); }
+  .leaflet-popup-content-wrapper { background: var(--bg-deep); color: var(--text-light); border: 1px solid var(--rule); border-radius: 0; }
+  .leaflet-popup-tip { background: var(--bg-deep); border: 1px solid var(--rule); }
+  .leaflet-popup-content { font-family: var(--font-body); margin: 14px 18px; }
+  .leaflet-popup-content strong { font-family: var(--font-display); font-size: 1.1rem; display: block; }
+  .leaflet-popup-content small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--primary); text-transform: uppercase; }
+
+  .form-card {
+    background: var(--bg-deep);
+    padding: clamp(2rem, 4vw, 3rem);
+    border: 1px solid var(--rule);
+  }
+</style>
+</head>
+<body class="bg-dark">
+
+<header class="nav-fixed">
+  <a href="/prototype/index.html" class="nav-brand">XUDUMELA</a>
+  <nav class="nav-links">
+    <a href="/prototype/index.html">Conservancy</a>
+    <a href="/prototype/stay.html">Stay</a>
+    <a href="/prototype/experiences.html">Experiences</a>
+    <a href="/prototype/conservancy.html">Conservation</a>
+    <a href="/prototype/poachella.html">Poachella</a>
+    <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/contact.html" class="is-active">Visit</a>
+  </nav>
+  <a href="mailto:bookings@xudumela.africa" class="nav-cta"><span>Email</span></a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="min-height: 65vh;">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="auto" poster="/assets/images/Delta-Scenes.jpg">
+      <source src="/assets/videos/hero-elephants-drinking.mp4" type="video/mp4">
+      <img src="/assets/images/Delta-Scenes.jpg" alt="Delta scenes at first light">
+    </video>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner container">
+    <div><span class="eyebrow" data-icon="map">↳ Plan your visit</span></div>
+    <div>
+      <h1 class="hero-mark" data-hero-mark>ENQUIRE</h1>
+      <div class="strap-tag mt-2" data-strap>
+        <span class="line"><span>Tell us the shape of the trip.</span></span>
+        <span class="line"><span>We reply within 48 hours.</span></span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-meta">
+        <div>Reply<strong>Within 48 hours</strong></div>
+        <div>Deposit<strong>30% on hold</strong></div>
+        <div>From Maun<strong>25 min by road</strong></div>
+        <div>Pickup<strong>P 350 / way</strong></div>
+      </div>
+      <span class="scroll-cue">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIVE WEATHER PANEL ============ -->
+<section class="section-tight bg-deep">
+  <div class="container">
+    <div class="two-up" style="align-items: start;">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="sun">↳ Right now on the Xudum Channel</span>
+        <h2 class="display-md mt-2">Live weather,<br><span class="italic text-primary">current conditions.</span></h2>
+        <p class="brochure mt-2">Pulled from a Maun‑area station, refreshed on every page load. For the full seasonal breakdown, month‑by‑month temperature and rainfall, and what to pack at each time of year, open the weather guide.</p>
+        <a href="/prototype/weather.html" class="btn mt-3">Seasons &amp; what to pack <span class="btn-arrow">→</span></a>
+      </div>
+
+      <div class="weather-panel r-up d1" data-weather>
+        <div class="weather-row-top">
+          <span class="weather-loc">Xudum Channel · LIVE</span>
+          <span class="weather-time" data-weather-time>—</span>
+        </div>
+        <div class="weather-main">
+          <div class="weather-icon" data-weather-icon aria-hidden="true"></div>
+          <div>
+            <div class="weather-temp" data-weather-temp>—°</div>
+            <div class="weather-desc" data-weather-desc>Fetching live data…</div>
+          </div>
+        </div>
+        <div class="weather-meta">
+          <div><span class="k">Wind</span><span class="v" data-weather-wind>—</span></div>
+          <div><span class="k">Humidity</span><span class="v" data-weather-humid>—</span></div>
+          <div><span class="k">Today</span><span class="v" data-weather-range>—</span></div>
+        </div>
+        <a href="/prototype/weather.html" class="weather-cta">Full seasons guide <span class="btn-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORM + DETAILS ============ -->
+<section class="section bg-deep">
+  <div class="container">
+    <div class="two-up">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="map">↳ Booking enquiry</span>
+        <h2 class="display-md mt-2">Tell us when, who,<br>and how many.</h2>
+        <p class="brochure mt-3" style="max-width: 44ch;">No card details at enquiry. We confirm availability, send a kit list, and request a 30 percent deposit to hold the dates. Booking is by enquiry rather than instant booking on purpose: it lets us keep the camp under a soft cap, and it means every guest gets the right tent for their party.</p>
+
+        <div class="info-grid mt-4">
+          <div class="info-cell">
+            <span class="label">Email</span>
+            <span class="value" style="font-size: 1.1rem;"><a href="mailto:bookings@xudumela.africa">bookings@xudumela.africa</a></span>
+            <span class="note muted">Booking enquiries · 48hr reply</span>
+          </div>
+          <div class="info-cell">
+            <span class="label">Phone / WhatsApp</span>
+            <span class="value" style="font-size: 1.1rem;"><a href="tel:+26773893375">+267 73 893 375</a></span>
+            <span class="note muted">09:00 – 17:00 Botswana time</span>
+          </div>
+        </div>
+        <div class="info-grid mt-0" style="border-top: none;">
+          <div class="info-cell">
+            <span class="label">Festival</span>
+            <span class="value" style="font-size: 1.1rem;"><a href="mailto:poachella2026@gmail.com">poachella2026@gmail.com</a></span>
+            <span class="note muted">Tickets via Quicket · this inbox for queries</span>
+          </div>
+          <div class="info-cell">
+            <span class="label">Instagram</span>
+            <span class="value" style="font-size: 1.1rem;"><a href="https://www.instagram.com/xudumela_conservancy" target="_blank" rel="noopener">@xudumela_conservancy</a></span>
+            <span class="note muted">News, line‑up, behind‑the‑scenes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card r-up d1">
+        <form onsubmit="event.preventDefault(); document.getElementById('enquiry-status').textContent='Thanks. Your enquiry has been received.'; this.style.opacity=0.4; this.style.pointerEvents='none';">
+          <div class="form-grid">
+            <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" required></div>
+            <div class="field"><label for="f-email">Your email</label><input id="f-email" name="email" type="email" required></div>
+            <div class="field"><label for="f-phone">Phone (optional)</label><input id="f-phone" name="phone" type="tel"></div>
+            <div class="field">
+              <label for="f-type">Enquiry type</label>
+              <select id="f-type" name="type">
+                <option>Booking — Camp Site</option>
+                <option>Booking — Safari Tent</option>
+                <option>Booking — Whole conservancy</option>
+                <option>Group enquiry (10+)</option>
+                <option>School visit</option>
+                <option>Poachella 2026</option>
+                <option>Press / Media</option>
+                <option>Conservation partnership</option>
+              </select>
+            </div>
+            <div class="field"><label for="f-arrive">Arrival</label><input id="f-arrive" name="arrive" type="date"></div>
+            <div class="field"><label for="f-depart">Departure</label><input id="f-depart" name="depart" type="date"></div>
+            <div class="field"><label for="f-adults">Adults</label><input id="f-adults" name="adults" type="number" min="1" value="2"></div>
+            <div class="field"><label for="f-children">Children</label><input id="f-children" name="children" type="number" min="0" value="0"></div>
+            <div class="field full"><label for="f-message">Tell us anything we should know</label><textarea id="f-message" name="message" placeholder="Dietary needs, special interests, anniversary, school programme, etc."></textarea></div>
+          </div>
+
+          <div class="mt-3" style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-solid" style="border: none;">Send enquiry <span class="btn-arrow">→</span></button>
+            <p id="enquiry-status" class="coords" style="color: var(--primary);"></p>
+          </div>
+
+          <p class="coords mt-3 muted">We reply within 48 hours. Outside that window, drop us a line directly.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section class="bg-deep">
+  <div class="map-wrap" style="height: 60vh;">
+    <div id="map"></div>
+    <div class="map-overlay">
+      <span class="eyebrow no-rule">↳ Two pins</span>
+      <h3 class="display-sm mt-2">Camp and town office.</h3>
+      <p class="mt-2">The conservancy sits on the Xudum Channel, 25 minutes by road from Maun. The town office is a meeting point for self‑drive guests and shuttle pickups.</p>
+      <p class="coords mt-2" style="color: var(--primary);">↳ Camp · 19°16′20.6″S · 22°50′42.2″E</p>
+      <p class="coords">↳ Office · 20°00′01.0″S · 23°22′39.7″E</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRACTICAL INFO ============ -->
+<section class="section bg-paper">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="compass">↳ Practical</span>
+        <h2 class="display-lg mt-2">What to expect<br>before you arrive.</h2>
+      </div>
+      <div class="right brochure paper r-up d1">
+        <p>The kit list we send on booking confirmation covers everything you need. The summary below is the version we read out on the phone when somebody calls to book.</p>
+      </div>
+    </div>
+
+    <div class="info-grid r-up mt-3">
+      <div class="info-cell"><span class="label">Currency</span><span class="value">Pula · USD</span><span class="note">Card and cash accepted. ZAR for festival tickets.</span></div>
+      <div class="info-cell"><span class="label">Plug</span><span class="value">SADC M · 230V</span><span class="note">BS546. Travel adaptor recommended.</span></div>
+      <div class="info-cell"><span class="label">Visa</span><span class="value">90 days · most</span><span class="note">UK / EU / US visa‑free for 90 days.</span></div>
+      <div class="info-cell"><span class="label">Health</span><span class="value">Malaria zone</span><span class="note">Speak to a travel clinic six weeks ahead.</span></div>
+    </div>
+    <div class="info-grid mt-0 r-up" style="border-top: none;">
+      <div class="info-cell"><span class="label">Best season</span><span class="value">Apr – Sep</span><span class="note">Cool nights, peak game, clear water.</span></div>
+      <div class="info-cell"><span class="label">Mobile</span><span class="value">BTC + Orange</span><span class="note">eSIM works. Maun has 5G; camp has 3G.</span></div>
+      <div class="info-cell"><span class="label">Children</span><span class="value">All ages</span><span class="note">Dedicated family stand for under‑6s.</span></div>
+      <div class="info-cell"><span class="label">Pets</span><span class="value">Not permitted</span><span class="note">Open conservancy with predators.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-foot">
+  <div class="container">
+    <div class="brand-block r-up">
+      <p class="brand-line">Xudumela is a privately‑run conservancy on the Xudum Channel, twenty minutes by road from Maun. Camp sites, safari tents, and the annual Poachella festival fund conservation through the Connect Trust.</p>
+      <div class="foot-coords">
+        <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
+        <span>Okavango Delta · Botswana</span>
+        <span>EST. 2026</span>
+      </div>
+    </div>
+
+    <div class="foot-top">
+      <div class="r-up d1">
+        <h4>The Conservancy</h4>
+        <ul>
+          <li><a href="/prototype/index.html">Home</a></li>
+          <li><a href="/prototype/stay.html">Stay</a></li>
+          <li><a href="/prototype/experiences.html">Experiences</a></li>
+          <li><a href="/prototype/conservancy.html">Conservation</a></li>
+          <li><a href="/prototype/journal.html">Journal</a></li>
+          <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+        </ul>
+      </div>
+      <div class="r-up d2">
+        <h4>Festival</h4>
+        <ul>
+          <li><a href="/prototype/poachella.html">Poachella 2026</a></li>
+          <li><a href="https://www.quicket.co.za/events/371693-poachella-2026/" target="_blank" rel="noopener">Buy tickets</a></li>
+          <li><a href="/prototype/poachella.html#lineup">Line‑up</a></li>
+          <li><a href="/prototype/poachella.html#faq">Festival FAQ</a></li>
+        </ul>
+      </div>
+      <div class="r-up d3">
+        <h4>Reach Out</h4>
+        <ul>
+          <li><a href="mailto:bookings@xudumela.africa">bookings@xudumela.africa</a></li>
+          <li><a href="tel:+26773893375">+267 73 893 375</a></li>
+          <li><a href="https://wa.me/26773893375" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/xudumela_conservancy" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="/prototype/contact.html">Plan your visit</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-legal r-up">
+      <a href="/privacy">Privacy policy</a>
+      <a href="/terms">Terms &amp; conditions</a>
+      <a href="/cookies">Cookie policy</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/modern-slavery">Modern slavery statement</a>
+      <a href="/sitemap">Sitemap</a>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> Xudumela Conservancy &amp; Camp Grounds</span>
+      <span>VAT BW 1278 4920 11 · BTC Registered</span>
+      <span class="accent">Design by HIEB</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/prototype/assets/js/site.js?v=1779789692"></script>
+<script>
+(() => {
+  const map = L.map('map', { center: [-19.65, 23.1], zoom: 9, scrollWheelZoom: false });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '© Esri · Earthstar Geographics', maxZoom: 19,
+  }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap · © CARTO', subdomains: 'abcd', maxZoom: 19, opacity: 0.7,
+  }).addTo(map);
+  const mkPin = cls => L.divIcon({ html: `<div class="exp-pin ${cls}"></div>`, iconSize: [14, 14], iconAnchor: [7, 7] });
+  L.marker([-19.272376, 22.845069], { icon: mkPin('main') }).addTo(map).bindPopup('<strong>Xudumela Conservancy</strong><small>LOT 320 PM · Xudum Channel</small>').openPopup();
+  L.marker([-20.000280, 23.377704], { icon: mkPin('') }).addTo(map).bindPopup('<strong>Maun Town Office</strong><small>Plot 22207 Sedia · Pickup point</small>');
+  const route = L.polyline([[-20.000280, 23.377704], [-19.272376, 22.845069]], { color: '#b99d75', weight: 2, opacity: 0.7, dashArray: '6 6' }).addTo(map);
+  map.fitBounds(route.getBounds().pad(0.4));
+})();
+</script>
+
+</body>
+</html>

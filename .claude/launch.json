@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "xudumela-prototype",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "cd \"/Users/gilestobin/Library/CloudStorage/Dropbox/CLAUDE/05 OTHER PROJECTS/clone-xudumela-africa\" && python3 -m http.server 4321"
+      ],
+      "port": 4321
+    }
+  ]
+}

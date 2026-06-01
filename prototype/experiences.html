@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Experiences — Xudumela · Walking, mokoro, archery on the Xudum Channel</title>
+<meta name="description" content="Five guided experiences inside the Xudumela conservancy. Walking and tracking, mokoro, Bushmen archery, elephant hide, birding. Led by trackers who live in the bush.">
+<meta property="og:title" content="Experiences at Xudumela — Five ways to read the land">
+<meta property="og:image" content="/assets/images/IMG_3700.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1779789692">
+<style>
+  .leaflet-container { background: #0d0c08; font-family: var(--font-body); }
+  .leaflet-tile { filter: brightness(0.78) saturate(0.85) contrast(1.04); }
+  .leaflet-control-attribution { background: rgba(13,12,8,0.7) !important; color: var(--text-mute) !important; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; padding: 3px 8px; border: 1px solid var(--rule); }
+  .leaflet-control-attribution a { color: var(--primary) !important; }
+  .leaflet-control-zoom a { background: rgba(13,12,8,0.85) !important; color: var(--text-light) !important; border: 1px solid var(--rule) !important; }
+  .leaflet-control-zoom a:hover { background: var(--primary) !important; color: var(--bg-dark) !important; }
+  .exp-pin { width: 14px; height: 14px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 3px rgba(185,157,117,0.18), 0 0 0 7px rgba(185,157,117,0.08); cursor: pointer; }
+  .exp-pin.main { background: var(--secondary); box-shadow: 0 0 0 3px rgba(83,98,78,0.22), 0 0 0 8px rgba(83,98,78,0.1); }
+  .leaflet-marker-icon { transition: transform 0.3s; }
+  .leaflet-marker-icon:hover { transform: scale(1.4); }
+  .leaflet-popup-content-wrapper { background: var(--bg-deep); color: var(--text-light); border: 1px solid var(--rule); border-radius: 0; box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
+  .leaflet-popup-tip { background: var(--bg-deep); border: 1px solid var(--rule); }
+  .leaflet-popup-content { font-family: var(--font-body); margin: 14px 18px; }
+  .leaflet-popup-content strong { font-family: var(--font-display); font-size: 1.1rem; display: block; margin-bottom: 4px; }
+  .leaflet-popup-content small { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--primary); text-transform: uppercase; display: block; }
+
+  .exp-detail {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    min-height: 80vh;
+    border-top: 1px solid var(--rule);
+  }
+  .exp-detail.flip > :first-child { order: 2; }
+  .exp-detail .exp-detail-media { position: relative; overflow: hidden; }
+  .exp-detail .exp-detail-media img { width: 100%; height: 100%; object-fit: cover; }
+  .exp-detail .exp-detail-copy {
+    padding: clamp(3rem, 6vw, 5rem) var(--gutter);
+    display: flex; flex-direction: column; justify-content: center; gap: 1.4rem;
+  }
+  .exp-detail .exp-detail-meta {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem; margin-top: 1.5rem;
+    border-top: 1px solid var(--rule); padding-top: 1.5rem;
+  }
+  .exp-detail .exp-detail-meta .label {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--primary);
+  }
+  .exp-detail .exp-detail-meta .value { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.15; margin-top: 0.3rem; }
+  @media (max-width: 800px) {
+    .exp-detail { grid-template-columns: 1fr; }
+    .exp-detail.flip > :first-child { order: 0; }
+    .exp-detail .exp-detail-media { aspect-ratio: 4/3; }
+  }
+</style>
+</head>
+<body class="bg-dark">
+
+<header class="nav-fixed">
+  <a href="/prototype/index.html" class="nav-brand">XUDUMELA</a>
+  <nav class="nav-links">
+    <a href="/prototype/index.html">Conservancy</a>
+    <a href="/prototype/stay.html">Stay</a>
+    <a href="/prototype/experiences.html" class="is-active">Experiences</a>
+    <a href="/prototype/conservancy.html">Conservation</a>
+    <a href="/prototype/poachella.html">Poachella</a>
+    <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/contact.html">Visit</a>
+  </nav>
+  <a href="/prototype/contact.html" class="nav-cta"><span>Enquire</span></a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="min-height: 80vh;">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="auto" poster="/assets/images/IMG_3700.jpg">
+      <source src="/assets/videos/hero-giraffe-waterhole.mp4" type="video/mp4">
+      <img src="/assets/images/IMG_3700.jpg" alt="Mokoro on the Xudum Channel at first light">
+    </video>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner container">
+    <div><span class="eyebrow" data-icon="track">↳ Five guided experiences</span></div>
+    <div>
+      <h1 class="hero-mark" data-hero-mark>EXPERIENCES</h1>
+      <div class="strap-tag mt-2" data-strap>
+        <span class="line"><span>Walks, mokoro, archery, hide, birding.</span></span>
+        <span class="line"><span>Led by trackers who live in the bush.</span></span>
+        <span class="line"><span>No buggies. No PAs. No headcount targets.</span></span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-meta">
+        <div>Experiences<strong>5</strong></div>
+        <div>Group max<strong>6 guests</strong></div>
+        <div>Bookable<strong>On arrival</strong></div>
+        <div>From<strong>$20 pp</strong></div>
+      </div>
+      <span class="scroll-cue">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section class="bg-deep">
+  <div class="map-wrap">
+    <div id="map"></div>
+    <div class="map-overlay">
+      <span class="eyebrow no-rule">↳ Conservancy atlas</span>
+      <h3 class="display-sm mt-2">A map of every<br>marked spot on the land.</h3>
+      <p class="mt-2">Five experience locations plus the camp main deck and the boundary corners. Click any pin to read the brochure entry. Click and drag to explore.</p>
+      <div class="coords mt-2" style="color: var(--primary);">↳ 19° 16′ 20.6″ S · 22° 50′ 42.2″ E</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE DEEP DIVES ============ -->
+
+<section class="exp-detail" id="archery">
+  <div class="exp-detail-media r-fade">
+    <img src="/assets/images/Bushmen_Archery.jpg" alt="Bushmen archery in the Xudum Channel grasslands" class="kenburns">
+  </div>
+  <div class="exp-detail-copy">
+    <span class="eyebrow r-up">No. 01 · Half day</span>
+    <h2 class="display-lg r-up">Bushmen Archery.</h2>
+    <p class="lede r-up d1">The technique that fed this country for ten thousand years.</p>
+    <p class="brochure r-up d2">A half‑day with a tracker from a local San community. You will carve a bow, fletch an arrow, learn the silent draw, and shoot at a hide target from twenty paces. The method is unchanged. The conversation that goes with it, equally so. End the morning over fire‑grilled meat on the south stand.</p>
+    <div class="exp-detail-meta r-up d3">
+      <div><span class="label">Rate</span><div class="value">$95 per person</div></div>
+      <div><span class="label">Duration</span><div class="value">3.5 hours</div></div>
+      <div><span class="label">Departure</span><div class="value">07:30 or 14:30</div></div>
+      <div><span class="label">Coordinates</span><div class="value">19°16′58.7″S · 22°51′05.4″E</div></div>
+    </div>
+    <div class="r-up d4"><a href="/prototype/contact.html?activity=archery" class="btn">Book this experience <span class="btn-arrow">→</span></a></div>
+  </div>
+</section>
+
+<section class="exp-detail flip" id="walking">
+  <div class="exp-detail-media r-fade">
+    <img src="/assets/images/Guided_Tour.jpg" alt="Walking and tracking through the Xudum Channel bush" class="kenburns">
+  </div>
+  <div class="exp-detail-copy">
+    <span class="eyebrow r-up">No. 02 · Morning or last light</span>
+    <h2 class="display-lg r-up">Walking & Tracking.</h2>
+    <p class="lede r-up d1">Three hours on foot. Spoor, plant lore, big‑game safety drills, very few people.</p>
+    <p class="brochure r-up d2">Two guides per group of six. A licensed lead and a back‑up trailer. We read fresh sign, sit quietly when we should, and turn back if the wind shifts. Most groups see elephant, kudu, sable, and a half‑dozen smaller mammals on a single morning. Every walk ends with a flask of bush coffee and rusks under a shade tree.</p>
+    <div class="exp-detail-meta r-up d3">
+      <div><span class="label">Rate</span><div class="value">$75 per person</div></div>
+      <div><span class="label">Duration</span><div class="value">3 hours</div></div>
+      <div><span class="label">Departure</span><div class="value">06:00 or 16:00</div></div>
+      <div><span class="label">Coordinates</span><div class="value">19°16′22.4″S · 22°50′55.1″E</div></div>
+    </div>
+    <div class="r-up d4"><a href="/prototype/contact.html?activity=walking" class="btn">Book this experience <span class="btn-arrow">→</span></a></div>
+  </div>
+</section>
+
+<section class="exp-detail" id="mokoro">
+  <div class="exp-detail-media r-fade">
+    <img src="/assets/images/IMG_3700.jpg" alt="Mokoro on the Xudum Channel" class="kenburns">
+  </div>
+  <div class="exp-detail-copy">
+    <span class="eyebrow r-up">No. 03 · Dawn or dusk</span>
+    <h2 class="display-lg r-up">Mokoro & Canoes.</h2>
+    <p class="lede r-up d1">Pole or paddle through Xudum side‑streams.</p>
+    <p class="brochure r-up d2">A mokoro is a dugout. A canoe is a canoe. Both move quietly. You take one or the other from the launch beside Tent 04, push through papyrus into the side streams, and drift until you have to be told to come back. Reed frogs, malachite kingfishers, hippo from a respectful distance. Dawn is colder; dusk is more dramatic. We will pick one for you on arrival.</p>
+    <div class="exp-detail-meta r-up d3">
+      <div><span class="label">Rate</span><div class="value">$85 per person</div></div>
+      <div><span class="label">Duration</span><div class="value">2.5 hours</div></div>
+      <div><span class="label">Departure</span><div class="value">06:00 or 16:30</div></div>
+      <div><span class="label">Coordinates</span><div class="value">19°16′45.1″S · 22°50′58.4″E</div></div>
+    </div>
+    <div class="r-up d4"><a href="/prototype/contact.html?activity=mokoro" class="btn">Book this experience <span class="btn-arrow">→</span></a></div>
+  </div>
+</section>
+
+<section class="exp-detail flip" id="hide">
+  <div class="exp-detail-media r-fade">
+    <img src="/assets/images/IMG_3737.jpg" alt="Elephant hide overlooking a trail in the Xudum Channel bush" class="kenburns">
+  </div>
+  <div class="exp-detail-copy">
+    <span class="eyebrow r-up">No. 04 · By request</span>
+    <h2 class="display-lg r-up">Elephant Hide.</h2>
+    <p class="lede r-up d1">Sit quietly two metres above an elephant trail.</p>
+    <p class="brochure r-up d2">A timber hide on stilts, downwind of a well‑used elephant track between the channel and the woodland. We get you in before the animals are moving, and we keep you there until they have passed. No talking, no flash, no expectations. The best two hours of your stay, if you can stay still.</p>
+    <div class="exp-detail-meta r-up d3">
+      <div><span class="label">Rate</span><div class="value">$20 per person</div></div>
+      <div><span class="label">Duration</span><div class="value">2 hours</div></div>
+      <div><span class="label">Departure</span><div class="value">05:30 or 17:00</div></div>
+      <div><span class="label">Coordinates</span><div class="value">19°17′02.9″S · 22°51′22.7″E</div></div>
+    </div>
+    <div class="r-up d4"><a href="/prototype/contact.html?activity=hide" class="btn">Book this experience <span class="btn-arrow">→</span></a></div>
+  </div>
+</section>
+
+<section class="exp-detail" id="birding">
+  <div class="exp-detail-media r-fade">
+    <img src="/assets/images/Pool-Zebra.jpg" alt="Birding along the riverine fringe" class="kenburns">
+  </div>
+  <div class="exp-detail-copy">
+    <span class="eyebrow r-up">No. 05 · Daily</span>
+    <h2 class="display-lg r-up">Birding & Wellness.</h2>
+    <p class="lede r-up d1">Slow walks along the channel with binoculars and tea.</p>
+    <p class="brochure r-up d2">Two soft programmes for guests who want the rhythm of the bush without the adrenaline. A morning birding loop with the camp's logbook, marking sightings and confirming calls. And, during festival week, restorative yoga at the RESET Lounge, led by YOWNN Yoga. Both can be booked together as a half‑day package.</p>
+    <div class="exp-detail-meta r-up d3">
+      <div><span class="label">Rate</span><div class="value">From $40 pp</div></div>
+      <div><span class="label">Duration</span><div class="value">2 – 4 hours</div></div>
+      <div><span class="label">Departure</span><div class="value">06:30</div></div>
+      <div><span class="label">Coordinates</span><div class="value">19°16′18.3″S · 22°51′01.0″E</div></div>
+    </div>
+    <div class="r-up d4"><a href="/prototype/contact.html?activity=birding" class="btn">Book this experience <span class="btn-arrow">→</span></a></div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="section bg-paper">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="compass">↳ How booking works</span>
+        <h2 class="display-lg mt-2">Book on arrival,<br>or in advance.</h2>
+      </div>
+      <div class="right brochure paper r-up d1">
+        <p>All five experiences run on demand. You can book on arrival at the main deck, or list your preferences with us during the booking enquiry and we will reserve guides and equipment in advance. Group size is capped at six per departure. Children join walking and mokoro at the lead guide's discretion.</p>
+      </div>
+    </div>
+
+    <div class="three-col mt-3">
+      <div class="r-up">
+        <div class="coords text-primary">I.</div>
+        <h4 class="display-sm mt-1">Note your preferences</h4>
+        <p class="brochure paper mt-2">During the booking enquiry, tell us which experiences and which time slots. We block out guides and equipment.</p>
+      </div>
+      <div class="r-up d1">
+        <div class="coords text-primary">II.</div>
+        <h4 class="display-sm mt-1">Confirm on arrival</h4>
+        <p class="brochure paper mt-2">Final times are confirmed at check‑in around fire and a wind reading. Weather has the last word.</p>
+      </div>
+      <div class="r-up d2">
+        <div class="coords text-primary">III.</div>
+        <h4 class="display-sm mt-1">Pay at departure</h4>
+        <p class="brochure paper mt-2">Settle the experience tab on departure. Card or Pula cash. The Connect Trust levy is itemised on the invoice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-foot">
+  <div class="container">
+    <div class="brand-block r-up">
+      <p class="brand-line">Xudumela is a privately‑run conservancy on the Xudum Channel, twenty minutes by road from Maun. Camp sites, safari tents, and the annual Poachella festival fund conservation through the Connect Trust.</p>
+      <div class="foot-coords">
+        <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
+        <span>Okavango Delta · Botswana</span>
+        <span>EST. 2026</span>
+      </div>
+    </div>
+
+    <div class="foot-top">
+      <div class="r-up d1">
+        <h4>The Conservancy</h4>
+        <ul>
+          <li><a href="/prototype/index.html">Home</a></li>
+          <li><a href="/prototype/stay.html">Stay</a></li>
+          <li><a href="/prototype/experiences.html">Experiences</a></li>
+          <li><a href="/prototype/conservancy.html">Conservation</a></li>
+          <li><a href="/prototype/journal.html">Journal</a></li>
+          <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+        </ul>
+      </div>
+      <div class="r-up d2">
+        <h4>Festival</h4>
+        <ul>
+          <li><a href="/prototype/poachella.html">Poachella 2026</a></li>
+          <li><a href="https://www.quicket.co.za/events/371693-poachella-2026/" target="_blank" rel="noopener">Buy tickets</a></li>
+          <li><a href="/prototype/poachella.html#lineup">Line‑up</a></li>
+          <li><a href="/prototype/poachella.html#faq">Festival FAQ</a></li>
+        </ul>
+      </div>
+      <div class="r-up d3">
+        <h4>Reach Out</h4>
+        <ul>
+          <li><a href="mailto:bookings@xudumela.africa">bookings@xudumela.africa</a></li>
+          <li><a href="tel:+26773893375">+267 73 893 375</a></li>
+          <li><a href="https://wa.me/26773893375" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/xudumela_conservancy" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="/prototype/contact.html">Plan your visit</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-legal r-up">
+      <a href="/privacy">Privacy policy</a>
+      <a href="/terms">Terms &amp; conditions</a>
+      <a href="/cookies">Cookie policy</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/modern-slavery">Modern slavery statement</a>
+      <a href="/sitemap">Sitemap</a>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> Xudumela Conservancy &amp; Camp Grounds</span>
+      <span>VAT BW 1278 4920 11 · BTC Registered</span>
+      <span class="accent">Design by HIEB</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/prototype/assets/js/site.js?v=1779789692"></script>
+<script>
+(() => {
+  const center = [-19.273, 22.847];
+  const map = L.map('map', {
+    center, zoom: 14, zoomControl: true, scrollWheelZoom: false,
+    attributionControl: true,
+  });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '© Esri · Earthstar Geographics',
+    maxZoom: 19,
+  }).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap · © CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19,
+    opacity: 0.7,
+  }).addTo(map);
+
+  const mkPin = (cls = '') => L.divIcon({ className: 'exp-pin-wrap', html: `<div class="exp-pin ${cls}"></div>`, iconSize: [14, 14], iconAnchor: [7, 7] });
+
+  const pins = [
+    { id: 'camp',    name: 'Main Deck & Camp',     coord: [-19.272376, 22.845069], type: 'main', note: '19°16′20.6″S 22°50′42.2″E · The hub of the conservancy' },
+    { id: 'archery', name: 'Bushmen Archery',      coord: [-19.282979, 22.851504], type: 'pin',  note: 'No. 01 · $95 pp · 3.5 hrs' },
+    { id: 'walking', name: 'Walking & Tracking',   coord: [-19.272888, 22.848639], type: 'pin',  note: 'No. 02 · $75 pp · 3 hrs' },
+    { id: 'mokoro',  name: 'Mokoro Launch',        coord: [-19.279194, 22.849556], type: 'pin',  note: 'No. 03 · $85 pp · 2.5 hrs' },
+    { id: 'hide',    name: 'Elephant Hide',        coord: [-19.284139, 22.856306], type: 'pin',  note: 'No. 04 · $20 pp · 2 hrs' },
+    { id: 'birding', name: 'Birding Loop',         coord: [-19.271750, 22.850278], type: 'pin',  note: 'No. 05 · From $40 pp · 2–4 hrs' },
+    { id: 'maun',    name: 'Maun Town Office',     coord: [-20.000280, 23.377704], type: 'main', note: 'Plot 22207 Sedia, Maun · Pickup point' },
+  ];
+
+  const bounds = L.latLngBounds([]);
+  pins.forEach(p => {
+    const m = L.marker(p.coord, { icon: mkPin(p.type === 'main' ? 'main' : '') }).addTo(map);
+    m.bindPopup(`<strong>${p.name}</strong><small>${p.note}</small>`);
+    bounds.extend(p.coord);
+  });
+
+  // Fit to camp-only first, with Maun as outer
+  setTimeout(() => {
+    map.setView([-19.276, 22.849], 14);
+  }, 100);
+})();
+</script>
+
+</body>
+</html>

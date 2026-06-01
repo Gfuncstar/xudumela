@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Weather & Seasons — Xudumela · When to visit the Okavango Delta</title>
+<meta name="description" content="Live conditions, monthly temperature and rainfall averages, dry vs wet season detail, and what to pack for the southern Okavango Delta.">
+<meta property="og:title" content="Weather & Seasons — Xudumela Conservancy">
+<meta property="og:image" content="/assets/images/1660413.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1779789692">
+</head>
+<body class="bg-dark">
+
+<header class="nav-fixed">
+  <a href="/prototype/index.html" class="nav-brand">XUDUMELA</a>
+  <nav class="nav-links">
+    <a href="/prototype/index.html">Conservancy</a>
+    <a href="/prototype/stay.html">Stay</a>
+    <a href="/prototype/experiences.html">Experiences</a>
+    <a href="/prototype/conservancy.html">Conservation</a>
+    <a href="/prototype/poachella.html">Poachella</a>
+    <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/contact.html">Visit</a>
+  </nav>
+  <a href="/prototype/contact.html" class="nav-cta"><span>Enquire</span></a>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="min-height: 70vh;">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="auto" poster="/assets/images/1660413.jpg">
+      <source src="/assets/videos/hero-aerial-delta.mp4" type="video/mp4">
+      <img src="/assets/images/1660413.jpg" alt="Aerial of the Okavango Delta">
+    </video>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner container">
+    <div><span class="eyebrow" data-icon="sun">↳ Botswana's seasons · Xudum Channel</span></div>
+    <div>
+      <h1 class="hero-mark" data-hero-mark>WEATHER</h1>
+      <div class="strap-tag mt-2" data-strap>
+        <span class="line"><span>Two seasons. Twelve months.</span></span>
+        <span class="line"><span>Knowing the difference shapes the visit.</span></span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-meta">
+        <div>Lat / Lng<strong>19°16′S · 22°50′E</strong></div>
+        <div>Climate<strong>Semi‑arid savanna</strong></div>
+        <div>Elevation<strong>945 m</strong></div>
+        <div>Time zone<strong>SAST · UTC+2</strong></div>
+      </div>
+      <span class="scroll-cue">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIVE PANEL ============ -->
+<section class="section-tight bg-deep">
+  <div class="container">
+    <div class="weather-panel r-up" data-weather style="max-width: 720px; margin-inline: auto;">
+      <div class="weather-row-top">
+        <span class="weather-loc">Xudum Channel · LIVE</span>
+        <span class="weather-time" data-weather-time>—</span>
+      </div>
+      <div class="weather-main">
+        <div class="weather-icon" data-weather-icon aria-hidden="true"></div>
+        <div>
+          <div class="weather-temp" data-weather-temp>—°</div>
+          <div class="weather-desc" data-weather-desc>Fetching live data…</div>
+        </div>
+        <div class="weather-tomorrow">
+          <span class="wt-k">Tomorrow</span>
+          <span class="wt-v">↑ <span data-weather-tomorrow>—°</span></span>
+        </div>
+      </div>
+      <div class="weather-meta">
+        <div><span class="k">Wind</span><span class="v" data-weather-wind>—</span></div>
+        <div><span class="k">Humidity</span><span class="v" data-weather-humid>—</span></div>
+        <div><span class="k">Today</span><span class="v" data-weather-range>—</span></div>
+        <div><span class="k">Sunset</span><span class="v" data-weather-sunset>—</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MONTHLY CHART ============ -->
+<section class="section bg-dark">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="compass">The year</span>
+        <h2 class="display-lg mt-2">Twelve months,<br><span class="italic text-primary">two distinct halves.</span></h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>Maun's climate splits cleanly into a dry winter (April–September) and a wet summer (October–March). The bars below show average daily high temperatures; the cooler blue base tracks monthly rainfall.</p>
+      </div>
+    </div>
+
+    <div class="month-chart" data-month-chart></div>
+
+    <div class="r-up mt-3" style="display: flex; justify-content: center; gap: 2rem; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-mute);">
+      <span><span style="display:inline-block; width:14px; height:8px; background:var(--primary); vertical-align: middle; margin-right: 0.4rem;"></span>Daily high °C</span>
+      <span><span style="display:inline-block; width:14px; height:8px; background:rgba(96,138,175,0.45); vertical-align: middle; margin-right: 0.4rem;"></span>Rainfall mm</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO SEASONS ============ -->
+<section class="section bg-deep">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="leaf">Two seasons</span>
+        <h2 class="display-lg mt-2">Dry season, wet season.<br><span class="italic text-primary">Each has its own Delta.</span></h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>Botswana doesn't have four seasons; it has two. Knowing which one you're walking into shapes the trip, what you pack, what you'll see, and what it costs.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="season-grid r-up mt-3">
+    <div class="season-cell dry">
+      <span class="tag">Dry season · Cool · Peak game</span>
+      <h3>The dry winter.</h3>
+      <span class="months">April → September</span>
+      <p class="body">Cool, sunny days. Sharply cold nights. Water sources shrink, drawing wildlife to the channel and the deeper pans. The flood from Angola arrives in May and stays through August — the Delta is at its fullest. This is when you see the most animals at close quarters, and when the mornings bite enough to need a coat.</p>
+      <div class="stat-row">
+        <div><span class="k">Daily high</span><span class="v">24 – 32°C</span></div>
+        <div><span class="k">Nights</span><span class="v">2 – 12°C</span></div>
+        <div><span class="k">Rain</span><span class="v">~1–25 mm</span></div>
+      </div>
+    </div>
+
+    <div class="season-cell wet">
+      <span class="tag">Wet season · Hot · Birding peak</span>
+      <h3>The wet summer.</h3>
+      <span class="months">October → March</span>
+      <p class="body">Building heat. Afternoon thunderstorms from November. New foliage everywhere, calves and foals on the ground, and migratory birds arriving in waves through the rains. Animals are dispersed because water is everywhere, so game viewing is harder but birding is at its peak. The Delta itself recedes by January, then rises again in May.</p>
+      <div class="stat-row">
+        <div><span class="k">Daily high</span><span class="v">28 – 35°C</span></div>
+        <div><span class="k">Nights</span><span class="v">17 – 22°C</span></div>
+        <div><span class="k">Rain</span><span class="v">25 – 100 mm</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MONTH BY MONTH NOTES ============ -->
+<section class="section bg-paper">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="map">Month by month</span>
+        <h2 class="display-lg mt-2">What to expect,<br>twelve at a time.</h2>
+      </div>
+      <div class="right brochure paper r-up d1">
+        <p>A field‑staff field note for each month — when the channel rises, when the elephants come in, when Poachella runs, when to consider a longer stay.</p>
+      </div>
+    </div>
+
+    <div class="info-grid r-up mt-3">
+      <div class="info-cell">
+        <span class="label">January</span>
+        <span class="value">Green, wet, dramatic</span>
+        <span class="note">Heaviest rains. Storms most afternoons. Calves born across the bush. Birding peak.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">February</span>
+        <span class="value">Lush, hot, quiet</span>
+        <span class="note">Fewest visitors. The land at its most photogenic. Excellent rates.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">March</span>
+        <span class="value">Tailing off</span>
+        <span class="note">Storms thinning. First cool nights. Migrant birds beginning their northbound route.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">April</span>
+        <span class="value">The turn</span>
+        <span class="note">Dry season begins. Mornings cool. Bush starts to thin.</span>
+      </div>
+    </div>
+    <div class="info-grid mt-0 r-up" style="border-top:none;">
+      <div class="info-cell">
+        <span class="label">May</span>
+        <span class="value">Flood arrives</span>
+        <span class="note">Annual flood from Angola reaches the southern Delta. Channels widen. Mokoro at its best.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">June</span>
+        <span class="value">Cold + clear</span>
+        <span class="note">Coldest mornings of the year. Crisp light. First proper game concentrations.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">July</span>
+        <span class="value">Peak game</span>
+        <span class="note">Heavy elephant traffic on the channel. Predators highly active. Book early.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">August</span>
+        <span class="value">Warming again</span>
+        <span class="note">Mornings still cool, days warmer. Flood still in. Excellent walking conditions.</span>
+      </div>
+    </div>
+    <div class="info-grid mt-0 r-up" style="border-top:none;">
+      <div class="info-cell">
+        <span class="label">September</span>
+        <span class="value">Hot, dry, vivid</span>
+        <span class="note">The land at its driest. Animals tied to the channel. Sundowner colour is best of the year.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">October</span>
+        <span class="value">Festival month</span>
+        <span class="note">Poachella weekend (2–4 Oct). Building heat. Last reliable dry days before the rains.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">November</span>
+        <span class="value">First storms</span>
+        <span class="note">Afternoon thunderstorms return. The bush greens fast. Migrant birds arrive in numbers.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">December</span>
+        <span class="value">Wet again</span>
+        <span class="note">Full wet season. Lush, hot, photogenic. Festive‑week rates apply 21 Dec – 5 Jan.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT TO PACK ============ -->
+<section class="section bg-deep">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="tent">The kit list</span>
+        <h2 class="display-lg mt-2">What to bring,<br><span class="italic text-primary">by season.</span></h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>The summary version. The full kit list is sent on every booking confirmation. If in doubt, lean toward neutral colours, long sleeves for dusk, and one warm layer more than you think you need in winter.</p>
+      </div>
+    </div>
+
+    <div class="pack-grid r-up mt-3">
+      <div class="pack-cell">
+        <h4>↳ Dry season · Apr–Sep</h4>
+        <ul>
+          <li>Warm fleece + windproof jacket for mornings</li>
+          <li>Beanie or buff for dawn drives and mokoro</li>
+          <li>Long trousers, long‑sleeved shirts (neutral tones)</li>
+          <li>Closed shoes + one pair of sandals</li>
+          <li>Sunhat, polarised sunglasses</li>
+          <li>SPF 30+ sunscreen, lip balm</li>
+          <li>Binoculars (8×42 ideal)</li>
+          <li>Reusable water bottle</li>
+        </ul>
+      </div>
+      <div class="pack-cell">
+        <h4>↳ Wet season · Oct–Mar</h4>
+        <ul>
+          <li>Light long‑sleeved cottons (mosquito coverage)</li>
+          <li>Light rain shell or poncho</li>
+          <li>Quick‑drying trousers + a spare pair</li>
+          <li>Closed shoes that handle wet sand</li>
+          <li>Wide‑brim sunhat</li>
+          <li>SPF 50+ sunscreen</li>
+          <li>Malaria prophylaxis (consult a clinic six weeks ahead)</li>
+          <li>Camera dry bag</li>
+        </ul>
+      </div>
+      <div class="pack-cell">
+        <h4>↳ Year‑round essentials</h4>
+        <ul>
+          <li>UK / EU / US plug adaptor (SADC M, 230V)</li>
+          <li>Headtorch + spare batteries</li>
+          <li>Insect repellent (DEET or picaridin)</li>
+          <li>Personal medications</li>
+          <li>Soft‑sided luggage (charter flights when used)</li>
+          <li>Passport with 2 blank pages, 6 months validity</li>
+          <li>USD, Pula or card — both accepted on site</li>
+          <li>A notebook. Always a notebook.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEST TIME PER ACTIVITY ============ -->
+<section class="section bg-olive">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" style="color: var(--paper);" data-icon="track">Best time for…</span>
+        <h2 class="display-lg mt-2">Match the month<br>to the moment.</h2>
+      </div>
+      <div class="right brochure r-up d1" style="color: var(--bone);">
+        <p>The Delta is good year‑round. But each pursuit has its peak window.</p>
+      </div>
+    </div>
+
+    <div class="info-grid r-up mt-3" style="border-color: rgba(255,255,255,0.2);">
+      <div class="info-cell" style="border-right-color: rgba(255,255,255,0.2);">
+        <span class="label" style="color: var(--paper);">Big game</span>
+        <span class="value">Jul – Sep</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Dry months pull animals to the channel.</span>
+      </div>
+      <div class="info-cell" style="border-right-color: rgba(255,255,255,0.2);">
+        <span class="label" style="color: var(--paper);">Mokoro &amp; channel</span>
+        <span class="value">May – Aug</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Flood at full extent. Pole through papyrus side streams.</span>
+      </div>
+      <div class="info-cell" style="border-right-color: rgba(255,255,255,0.2);">
+        <span class="label" style="color: var(--paper);">Birding</span>
+        <span class="value">Nov – Feb</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Wet‑season migrants double the species list.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label" style="color: var(--paper);">Photography</span>
+        <span class="value">Apr – May, Sep</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Cleanest light, varied subjects, fewer crowds.</span>
+      </div>
+    </div>
+    <div class="info-grid mt-0 r-up" style="border-top:none; border-color: rgba(255,255,255,0.2);">
+      <div class="info-cell" style="border-right-color: rgba(255,255,255,0.2);">
+        <span class="label" style="color: var(--paper);">Walking safari</span>
+        <span class="value">May – Sep</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Cooler mornings, drier underfoot.</span>
+      </div>
+      <div class="info-cell" style="border-right-color: rgba(255,255,255,0.2);">
+        <span class="label" style="color: var(--paper);">Family travel</span>
+        <span class="value">Jun – Aug</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Low malaria risk window. School‑holiday friendly.</span>
+      </div>
+      <div class="info-cell" style="border-right-color: rgba(255,255,255,0.2);">
+        <span class="label" style="color: var(--paper);">Poachella festival</span>
+        <span class="value">2 – 4 Oct</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Edition 02. Tickets via Quicket.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label" style="color: var(--paper);">Quietest months</span>
+        <span class="value">Feb &amp; Apr</span>
+        <span class="note" style="color: var(--bone); opacity: 0.78;">Shoulder pricing. Real solitude.</span>
+      </div>
+    </div>
+
+    <div class="r-up mt-4" style="display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="/prototype/contact.html" class="btn" style="color:var(--bone); border-color:var(--bone);">Send a booking enquiry <span class="btn-arrow">→</span></a>
+      <a href="/prototype/stay.html" class="btn" style="color:var(--bone); border-color:var(--bone);">Stay options &amp; rates <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-foot">
+  <div class="container">
+    <div class="brand-block r-up">
+      <p class="brand-line">Xudumela is a privately‑run conservancy on the Xudum Channel, twenty minutes by road from Maun. Camp sites, safari tents, and the annual Poachella festival fund conservation through the Connect Trust.</p>
+      <div class="foot-coords">
+        <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
+        <span>Okavango Delta · Botswana</span>
+        <span>EST. 2026</span>
+      </div>
+    </div>
+
+    <div class="foot-top">
+      <div class="r-up d1">
+        <h4>The Conservancy</h4>
+        <ul>
+          <li><a href="/prototype/index.html">Home</a></li>
+          <li><a href="/prototype/stay.html">Stay</a></li>
+          <li><a href="/prototype/experiences.html">Experiences</a></li>
+          <li><a href="/prototype/conservancy.html">Conservation</a></li>
+          <li><a href="/prototype/journal.html">Journal</a></li>
+          <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+        </ul>
+      </div>
+      <div class="r-up d2">
+        <h4>Festival</h4>
+        <ul>
+          <li><a href="/prototype/poachella.html">Poachella 2026</a></li>
+          <li><a href="https://www.quicket.co.za/events/371693-poachella-2026/" target="_blank" rel="noopener">Buy tickets</a></li>
+          <li><a href="/prototype/poachella.html#lineup">Line‑up</a></li>
+          <li><a href="/prototype/poachella.html#faq">Festival FAQ</a></li>
+        </ul>
+      </div>
+      <div class="r-up d3">
+        <h4>Reach Out</h4>
+        <ul>
+          <li><a href="mailto:bookings@xudumela.africa">bookings@xudumela.africa</a></li>
+          <li><a href="tel:+26773893375">+267 73 893 375</a></li>
+          <li><a href="https://wa.me/26773893375" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/xudumela_conservancy" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="/prototype/contact.html">Plan your visit</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-legal r-up">
+      <a href="/privacy">Privacy policy</a>
+      <a href="/terms">Terms &amp; conditions</a>
+      <a href="/cookies">Cookie policy</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/modern-slavery">Modern slavery statement</a>
+      <a href="/sitemap">Sitemap</a>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> Xudumela Conservancy &amp; Camp Grounds</span>
+      <span>VAT BW 1278 4920 11 · BTC Registered</span>
+      <span class="accent">Design by HIEB</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/prototype/assets/js/site.js?v=1779789692"></script>
+</body>
+</html>
