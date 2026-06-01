@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Map — Xudumela · Interactive conservancy atlas</title>
+<meta name="description" content="Every marked spot on the Xudumela conservancy. Tents, pitches, experiences, patrol routes, and wildlife hotspots. Toggle layers to explore.">
+<meta property="og:title" content="The Map — Xudumela Conservancy Atlas">
+<meta property="og:image" content="/assets/images/1660413.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1780330083">
+<style>
+  /* ============ Map page locals ============ */
+  .map-page {
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    min-height: 100vh;
+  }
+  .atlas-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1.4rem; flex-wrap: wrap;
+    padding: clamp(1rem, 2vw, 1.4rem) var(--gutter);
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-dark);
+    position: sticky; top: 56px; z-index: 30;
+  }
+  .atlas-bar-left { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .atlas-bar h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .atlas-bar .crumbs {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+  .layer-toggles {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+  }
+  .layer-toggle {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--text-light);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+  }
+  .layer-toggle .dot {
+    width: 8px; height: 8px;
+    background: currentColor;
+    flex: none;
+  }
+  .layer-toggle[aria-pressed="true"] {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(185, 157, 117, 0.07);
+  }
+  .layer-toggle[aria-pressed="false"] { color: var(--text-mute); }
+  .layer-toggle:hover { border-color: var(--text-mute); }
+
+  /* ============ Map shell ============ */
+  .atlas-wrap {
+    position: relative;
+    flex: 1; min-height: 0;
+  }
+  #atlas {
+    height: clamp(560px, calc(100vh - 220px), 1000px);
+    width: 100%;
+  }
+  .leaflet-container { background: #0a0907; font-family: var(--font-body); }
+  .leaflet-tile { filter: brightness(0.78) saturate(0.85) contrast(1.04); }
+  .leaflet-control-attribution {
+    background: rgba(13, 12, 8, 0.78) !important;
+    color: var(--text-mute) !important;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border: 1px solid var(--rule);
+  }
+  .leaflet-control-attribution a { color: var(--primary) !important; }
+  .leaflet-control-zoom a {
+    background: rgba(13, 12, 8, 0.88) !important;
+    color: var(--text-light) !important;
+    border: 1px solid var(--rule) !important;
+  }
+  .leaflet-control-zoom a:hover {
+    background: var(--primary) !important;
+    color: var(--bg-dark) !important;
+  }
+
+  /* ============ Pins ============ */
+  .atlas-pin {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow:
+      0 0 0 3px rgba(185, 157, 117, 0.18),
+      0 0 0 8px rgba(185, 157, 117, 0.08),
+      0 2px 8px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .atlas-pin.stay { background: var(--bone); }
+  .atlas-pin.experience { background: var(--primary); }
+  .atlas-pin.patrol { background: #cd5a4a; }
+  .atlas-pin.wildlife { background: #6c8b5b; }
+  .atlas-pin.logistics { background: var(--text-light); }
+  .atlas-pin.main {
+    background: var(--primary);
+    width: 22px; height: 22px;
+    box-shadow:
+      0 0 0 4px rgba(185, 157, 117, 0.22),
+      0 0 0 10px rgba(185, 157, 117, 0.1),
+      0 4px 14px rgba(0, 0, 0, 0.6);
+  }
+  .atlas-pin:hover { transform: scale(1.35); }
+
+  /* ============ Detail panel ============ */
+  .atlas-panel {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    width: min(360px, calc(100% - 2.4rem));
+    background: rgba(13, 12, 8, 0.94);
+    border: 1px solid var(--rule);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1.6rem 1.4rem;
+    z-index: 20;
+    transform: translateX(calc(100% + 2rem));
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .atlas-panel.is-open { transform: translateX(0); }
+  .atlas-panel .panel-close {
+    position: absolute; top: 0.6rem; right: 0.6rem;
+    width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--text-light);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .atlas-panel .panel-close:hover { border-color: var(--primary); color: var(--primary); }
+  .atlas-panel .panel-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .atlas-panel .panel-title {
+    font-family: var(--font-display);
+    font-size: 1.7rem;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-top: 0.6rem;
+    color: var(--text-light);
+  }
+  .atlas-panel .panel-coords {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--primary);
+    margin-top: 0.6rem;
+  }
+  .atlas-panel .panel-body {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--text-light);
+    margin-top: 1rem;
+  }
+  .atlas-panel .panel-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+  .atlas-panel .panel-meta div {
+    display: flex; flex-direction: column; gap: 0.2rem;
+  }
+  .atlas-panel .panel-meta .k {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+  .atlas-panel .panel-meta .v {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--text-light);
+  }
+  .atlas-panel .panel-cta {
+    margin-top: 1.2rem;
+  }
+  .atlas-panel .panel-cta a {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--primary);
+    text-decoration: none;
+    padding: 0.6rem 0.9rem;
+    border: 1px solid var(--primary);
+  }
+  .atlas-panel .panel-cta a:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+  }
+
+  /* ============ Legend ============ */
+  .atlas-legend {
+    position: absolute;
+    bottom: 1.2rem; left: 1.2rem;
+    z-index: 15;
+    padding: 0.8rem 1rem;
+    background: rgba(13, 12, 8, 0.85);
+    border: 1px solid var(--rule);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; flex-direction: column; gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .atlas-legend .row { display: flex; align-items: center; gap: 0.6rem; }
+  .atlas-legend .swatch { width: 10px; height: 10px; flex: none; }
+  .atlas-legend .swatch.stay { background: var(--bone); }
+  .atlas-legend .swatch.experience { background: var(--primary); }
+  .atlas-legend .swatch.patrol { background: #cd5a4a; }
+  .atlas-legend .swatch.wildlife { background: #6c8b5b; }
+  .atlas-legend .swatch.logistics { background: var(--text-light); }
+
+  /* Polyline + polygon overlays */
+  .leaflet-overlay-pane svg path.boundary {
+    stroke: var(--primary);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 4;
+    fill: rgba(185, 157, 117, 0.04);
+  }
+  .leaflet-overlay-pane svg path.patrol-line {
+    stroke: #cd5a4a;
+    stroke-width: 2;
+    stroke-dasharray: 3 6;
+    fill: none;
+  }
+  .leaflet-overlay-pane svg path.walking-trail {
+    stroke: var(--bone);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 4;
+    fill: none;
+  }
+  .leaflet-overlay-pane svg path.channel-route {
+    stroke: #608aaf;
+    stroke-width: 2;
+    fill: none;
+    opacity: 0.7;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 700px) {
+    .atlas-bar { top: 52px; padding: 0.9rem var(--gutter); }
+    .atlas-bar-left { gap: 0.6rem; }
+    .atlas-bar h1 { font-size: 1.2rem; }
+    .layer-toggle { padding: 0.4rem 0.7rem; font-size: 9px; letter-spacing: 0.2em; }
+    #atlas { height: calc(100vh - 200px); }
+    .atlas-panel {
+      top: auto; bottom: 0; left: 0; right: 0;
+      width: 100%;
+      border-left: none; border-right: none; border-bottom: none;
+      transform: translateY(100%);
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    .atlas-panel.is-open { transform: translateY(0); }
+    .atlas-legend { font-size: 8px; padding: 0.6rem 0.8rem; }
+  }
+</style>
+</head>
+<body class="bg-dark">
+
+<header class="nav-fixed">
+  <a href="/prototype/index.html" class="nav-brand">XUDUMELA</a>
+  <nav class="nav-links">
+    <a href="/prototype/index.html">Conservancy</a>
+    <a href="/prototype/stay.html">Stay</a>
+    <a href="/prototype/experiences.html">Experiences</a>
+    <a href="/prototype/map.html" class="is-active">Map</a>
+    <a href="/prototype/conservancy.html">Conservation</a>
+    <a href="/prototype/poachella.html">Poachella</a>
+    <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/contact.html">Visit</a>
+  </nav>
+  <a href="/prototype/contact.html" class="nav-cta"><span>Enquire</span></a>
+</header>
+
+<div class="map-page">
+
+  <!-- ============ Atlas bar ============ -->
+  <div class="atlas-bar">
+    <div class="atlas-bar-left">
+      <span class="crumbs">↳ Conservancy atlas</span>
+      <h1>Every marked spot on the land.</h1>
+    </div>
+    <div class="layer-toggles" role="group" aria-label="Map layers">
+      <button class="layer-toggle" data-layer="stay" aria-pressed="true"><span class="dot"></span>Stay</button>
+      <button class="layer-toggle" data-layer="experience" aria-pressed="true"><span class="dot"></span>Experiences</button>
+      <button class="layer-toggle" data-layer="patrol" aria-pressed="true"><span class="dot"></span>Patrol</button>
+      <button class="layer-toggle" data-layer="wildlife" aria-pressed="true"><span class="dot"></span>Wildlife</button>
+      <button class="layer-toggle" data-layer="logistics" aria-pressed="true"><span class="dot"></span>Logistics</button>
+    </div>
+  </div>
+
+  <!-- ============ Map ============ -->
+  <div class="atlas-wrap">
+    <div id="atlas"></div>
+
+    <aside class="atlas-panel" data-panel hidden>
+      <button class="panel-close" data-panel-close aria-label="Close">✕</button>
+      <span class="panel-eyebrow" data-panel-eyebrow>—</span>
+      <h2 class="panel-title" data-panel-title>—</h2>
+      <div class="panel-coords" data-panel-coords>—</div>
+      <p class="panel-body" data-panel-body>—</p>
+      <div class="panel-meta" data-panel-meta></div>
+      <div class="panel-cta" data-panel-cta></div>
+    </aside>
+
+    <div class="atlas-legend" aria-hidden="true">
+      <div class="row"><span class="swatch stay"></span>Stay (tents + pitches)</div>
+      <div class="row"><span class="swatch experience"></span>Guided experiences</div>
+      <div class="row"><span class="swatch patrol"></span>Boundary + patrol</div>
+      <div class="row"><span class="swatch wildlife"></span>Wildlife hotspots</div>
+      <div class="row"><span class="swatch logistics"></span>Transfers + access</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-foot">
+  <div class="container">
+    <div class="brand-block r-up">
+      <div class="foot-coords">
+        <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
+        <span>Okavango Delta · Botswana</span>
+        <span>EST. 2026</span>
+      </div>
+    </div>
+
+    <div class="foot-top">
+      <div class="r-up d1">
+        <h4>The Conservancy</h4>
+        <ul>
+          <li><a href="/prototype/index.html">Home</a></li>
+          <li><a href="/prototype/stay.html">Stay</a></li>
+          <li><a href="/prototype/experiences.html">Experiences</a></li>
+          <li><a href="/prototype/conservancy.html">Conservation</a></li>
+          <li><a href="/prototype/journal.html">Journal</a></li>
+          <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+        </ul>
+      </div>
+      <div class="r-up d2">
+        <h4>Festival</h4>
+        <ul>
+          <li><a href="/prototype/poachella.html">Poachella 2026</a></li>
+          <li><a href="https://www.quicket.co.za/events/371693-poachella-2026/" target="_blank" rel="noopener">Buy tickets</a></li>
+          <li><a href="/prototype/poachella.html#lineup">Line‑up</a></li>
+          <li><a href="/prototype/poachella.html#faq">Festival FAQ</a></li>
+        </ul>
+      </div>
+      <div class="r-up d3">
+        <h4>Reach Out</h4>
+        <ul>
+          <li><a href="mailto:bookings@xudumela.africa">bookings@xudumela.africa</a></li>
+          <li><a href="tel:+26773893375">+267 73 893 375</a></li>
+          <li><a href="https://wa.me/26773893375" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/xudumela_conservancy" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="/prototype/contact.html">Plan your visit</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> Xudumela Conservancy &amp; Camp Grounds</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="/prototype/assets/js/site.js?v=1780330083"></script>
+<script>
+(() => {
+  // ---- Data: every marked spot on the conservancy ----
+  const CENTER = [-19.2738, 22.8470];
+  const POINTS = [
+    // STAY: tents
+    { id: 'tent01', layer: 'stay', name: 'The Sable',     coord: [-19.27220, 22.84580], eyebrow: 'Tent 01 · East stand',     body: 'Raised canvas tent on a teak deck, east stand. 26 m² with private deck. Twin or double configuration.',           meta: { 'Type': 'Safari tent', 'Sleeps': '2', 'View': 'East over papyrus', 'Walk to deck': '2′ 10″' } },
+    { id: 'tent02', layer: 'stay', name: 'The Sitatunga', coord: [-19.27190, 22.84462], eyebrow: 'Tent 02 · Riverside',      body: 'Closest tent to the channel. Wake to mist coming off the water.',                                                meta: { 'Type': 'Safari tent', 'Sleeps': '2', 'View': 'Channel',          'Walk to deck': '3′ 40″' } },
+    { id: 'tent03', layer: 'stay', name: 'The Tsessebe',  coord: [-19.27205, 22.84612], eyebrow: 'Tent 03 · East stand',     body: 'East stand, set back from the bank, surrounded by jackalberry shade.',                                            meta: { 'Type': 'Safari tent', 'Sleeps': '2', 'View': 'Bush',             'Walk to deck': '2′ 50″' } },
+    { id: 'tent04', layer: 'stay', name: 'The Reedbuck',  coord: [-19.27220, 22.84458], eyebrow: 'Tent 04 · Riverside',      body: 'Sister tent to The Sitatunga, marginally further south. Same channel view.',                                      meta: { 'Type': 'Safari tent', 'Sleeps': '2', 'View': 'Channel',          'Walk to deck': '3′ 50″' } },
+    { id: 'tent05', layer: 'stay', name: 'The Hippo',     coord: [-19.27360, 22.84450], eyebrow: 'Tent 05 · West, near the hide', body: 'Furthest tent. Quietest, with the shortest walk to the elephant hide.',                                       meta: { 'Type': 'Safari tent', 'Sleeps': '2', 'View': 'West bank',        'Walk to deck': '4′ 20″' } },
+    { id: 'tent06', layer: 'stay', name: 'The Eagle',     coord: [-19.27260, 22.84420], eyebrow: 'Tent 06 · West, top of bank',  body: 'Top of the west bank, the widest panorama on the property. Best dawn light.',                                  meta: { 'Type': 'Safari tent', 'Sleeps': '2', 'View': 'Full delta',       'Walk to deck': '3′ 30″' } },
+
+    // STAY: pitches
+    { id: 'pitch01', layer: 'stay', name: 'Pitch 01 · River edge',   coord: [-19.27290, 22.84610], eyebrow: 'Pitch · Self-pitch', body: 'Closest pitch to the channel. Fire pit, table, tap, and a flat sand stand under leadwood.', meta: { 'Type': 'Camp pitch', 'Stand': 'River edge', 'Walk to ablutions': '60 sec' } },
+    { id: 'pitch04', layer: 'stay', name: 'Pitch 04 · Jackalberry',  coord: [-19.27300, 22.84630], eyebrow: 'Pitch · Self-pitch', body: 'Under a jackalberry tree. Deep shade through the day.',                                       meta: { 'Type': 'Camp pitch', 'Stand': 'Shade',       'Walk to ablutions': '60 sec' } },
+    { id: 'pitch07', layer: 'stay', name: 'Pitch 07 · Family stand', coord: [-19.27268, 22.84602], eyebrow: 'Pitch · Family',     body: 'Family stand. Larger footprint, dedicated bedroll storage, set apart from the standard stands.', meta: { 'Type': 'Family pitch', 'Stand': 'Family',     'Walk to ablutions': '90 sec' } },
+
+    // EXPERIENCES
+    { id: 'archery', layer: 'experience', name: 'Bushmen Archery',    coord: [-19.28298, 22.85150], eyebrow: 'No. 01 · Half day',  body: 'A half-day with a tracker from a local San community. Carve a bow, fletch an arrow, learn the silent draw.', meta: { 'Rate': '$95 pp', 'Duration': '3.5 hrs', 'Departs': '07:30 or 14:30' }, link: '/prototype/experiences.html#archery' },
+    { id: 'walking', layer: 'experience', name: 'Walking & Tracking', coord: [-19.27289, 22.84864], eyebrow: 'No. 02 · Half day',  body: 'A guided walk reading prints, browse marks, and dung as a single text.',                                       meta: { 'Rate': '$75 pp', 'Duration': '3 hrs',  'Departs': '06:00' },          link: '/prototype/experiences.html#walking' },
+    { id: 'mokoro',  layer: 'experience', name: 'Mokoro & Canoes',    coord: [-19.27919, 22.84956], eyebrow: 'No. 03 · Half day',  body: 'A tracker poles a dugout up the side channels. Two and a half quiet hours.',                                  meta: { 'Rate': '$85 pp', 'Duration': '2.5 hrs','Departs': '06:30 or 16:00' }, link: '/prototype/experiences.html#mokoro' },
+    { id: 'hide',    layer: 'experience', name: 'Elephant Hide',      coord: [-19.28414, 22.85631], eyebrow: 'No. 04 · Self-led',  body: 'A reed-and-pole hide on the south stretch. Sit as long as you like.',                                          meta: { 'Rate': '$20 pp', 'Duration': '2 hrs',  'Departs': 'On request' },     link: '/prototype/experiences.html#hide' },
+    { id: 'birding', layer: 'experience', name: 'Birding Loop',       coord: [-19.27175, 22.85028], eyebrow: 'No. 05 · Half day',  body: 'Two to four hours with a tracker who knows the species list back to front.',                                   meta: { 'Rate': 'From $40 pp', 'Duration': '2–4 hrs', 'Departs': '06:00' },    link: '/prototype/experiences.html#birding' },
+
+    // WILDLIFE hotspots
+    { id: 'wild-elephant', layer: 'wildlife', name: 'Elephant crossing', coord: [-19.27520, 22.85420], eyebrow: '↳ Hotspot',       body: 'Where the herd crosses the channel at dawn and dusk. Last seen: this morning, 04:18, herd of 12.',                  meta: { 'Most common': 'Dawn + dusk', 'Last seen': 'Today' } },
+    { id: 'wild-leopard',  layer: 'wildlife', name: 'Leopard scrape',    coord: [-19.27880, 22.85070], eyebrow: '↳ Hotspot',       body: 'A reliable scratch tree. Track-and-sign session most months. Last leopard sighting: 11 days ago.',                  meta: { 'Most common': 'Pre-dawn',    'Last seen': '11 days ago' } },
+    { id: 'wild-giraffe',  layer: 'wildlife', name: 'Giraffe waterhole', coord: [-19.27050, 22.85820], eyebrow: '↳ Hotspot',       body: 'Small spring-fed pan at the north-east corner. Giraffe down through the dry months.',                                meta: { 'Most common': 'Mid-morning', 'Last seen': 'Yesterday' } },
+    { id: 'wild-hippo',    layer: 'wildlife', name: 'Hippo pod',         coord: [-19.28080, 22.85240], eyebrow: '↳ Hotspot',       body: 'Permanent pod of eight. Audible from the camp at night.',                                                            meta: { 'Most common': 'Always',      'Last seen': 'Always' } },
+
+    // PATROL: corners only (the polyline draws the route)
+    { id: 'corner-nw', layer: 'patrol', name: 'Boundary · NW corner', coord: [-19.27000, 22.84300], eyebrow: '↳ Boundary',     body: 'Conservancy boundary marker, north-west corner.',  meta: { 'Marker': 'Painted post', 'GPS': 'NW' } },
+    { id: 'corner-ne', layer: 'patrol', name: 'Boundary · NE corner', coord: [-19.27000, 22.86200], eyebrow: '↳ Boundary',     body: 'Conservancy boundary marker, north-east corner.',  meta: { 'Marker': 'Painted post', 'GPS': 'NE' } },
+    { id: 'corner-se', layer: 'patrol', name: 'Boundary · SE corner', coord: [-19.28700, 22.86200], eyebrow: '↳ Boundary',     body: 'Conservancy boundary marker, south-east corner.',  meta: { 'Marker': 'Painted post', 'GPS': 'SE' } },
+    { id: 'corner-sw', layer: 'patrol', name: 'Boundary · SW corner', coord: [-19.28700, 22.84300], eyebrow: '↳ Boundary',     body: 'Conservancy boundary marker, south-west corner.',  meta: { 'Marker': 'Painted post', 'GPS': 'SW' } },
+
+    // LOGISTICS
+    { id: 'main-deck', layer: 'logistics', name: 'Main deck & camp', coord: [-19.272376, 22.845069], eyebrow: '↳ The hub',  body: 'The heart of the conservancy. Plunge pool, bar, breakfast, and Wi-Fi (when the weather behaves).', meta: { 'Open': '24h',           'Wi-Fi': 'Reliable here' }, main: true },
+    { id: 'maun',      layer: 'logistics', name: 'Maun town office', coord: [-20.000280, 23.377704], eyebrow: '↳ Pickup',   body: 'Maun town office. Pickup for the 25-minute transfer to camp.',                                       meta: { 'Address': 'Plot 22207 Sedia', 'Transfer': '25 min' } },
+    { id: 'airstrip',  layer: 'logistics', name: 'Maun airstrip',     coord: [-19.972500, 23.430000], eyebrow: '↳ Arrival', body: 'Maun International Airport. Daily flights from Johannesburg, Cape Town, and Gaborone.',           meta: { 'Code': 'MUB',           'Transfers': 'P 350 / way' } },
+  ];
+
+  // Boundary polygon (corner coords above)
+  const BOUNDARY = [
+    [-19.27000, 22.84300],
+    [-19.27000, 22.86200],
+    [-19.28700, 22.86200],
+    [-19.28700, 22.84300],
+    [-19.27000, 22.84300],
+  ];
+
+  // Patrol route — roughly along the boundary, slightly inset
+  const PATROL_ROUTE = [
+    [-19.27050, 22.84350],
+    [-19.27050, 22.86150],
+    [-19.28650, 22.86150],
+    [-19.28650, 22.84350],
+    [-19.27050, 22.84350],
+  ];
+
+  // Walking trail — short loop near camp
+  const WALKING_TRAIL = [
+    [-19.27240, 22.84510],
+    [-19.27290, 22.84860],
+    [-19.27460, 22.85040],
+    [-19.27600, 22.84980],
+    [-19.27520, 22.84620],
+    [-19.27330, 22.84510],
+    [-19.27240, 22.84510],
+  ];
+
+  // Mokoro channel route
+  const CHANNEL_ROUTE = [
+    [-19.27919, 22.84956],
+    [-19.27840, 22.85070],
+    [-19.27710, 22.85260],
+    [-19.27550, 22.85440],
+    [-19.27400, 22.85550],
+    [-19.27260, 22.85610],
+  ];
+
+  // ---- Map setup ----
+  const map = L.map('atlas', {
+    center: CENTER,
+    zoom: 15,
+    zoomControl: true,
+    scrollWheelZoom: true,
+    attributionControl: true,
+  });
+
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '© Esri · Earthstar Geographics',
+    maxZoom: 19,
+  }).addTo(map);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap · © CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19,
+    opacity: 0.55,
+  }).addTo(map);
+
+  // ---- Polygons / polylines (grouped by layer for toggling) ----
+  const layerGroups = {
+    stay:        L.layerGroup().addTo(map),
+    experience:  L.layerGroup().addTo(map),
+    patrol:      L.layerGroup().addTo(map),
+    wildlife:    L.layerGroup().addTo(map),
+    logistics:   L.layerGroup().addTo(map),
+  };
+
+  L.polygon(BOUNDARY, { className: 'boundary', interactive: false }).addTo(layerGroups.patrol);
+  L.polyline(PATROL_ROUTE, { className: 'patrol-line', interactive: false }).addTo(layerGroups.patrol);
+  L.polyline(WALKING_TRAIL, { className: 'walking-trail', interactive: false }).addTo(layerGroups.experience);
+  L.polyline(CHANNEL_ROUTE, { className: 'channel-route', interactive: false }).addTo(layerGroups.experience);
+
+  // ---- Pins ----
+  const mkPin = (layer, isMain) => L.divIcon({
+    className: 'atlas-pin-wrap',
+    html: `<div class="atlas-pin ${layer}${isMain ? ' main' : ''}"></div>`,
+    iconSize: isMain ? [22, 22] : [16, 16],
+    iconAnchor: isMain ? [11, 11] : [8, 8],
+  });
+
+  // ---- Detail panel ----
+  const panel = document.querySelector('[data-panel]');
+  const openPanel = (p) => {
+    panel.querySelector('[data-panel-eyebrow]').textContent = p.eyebrow || '';
+    panel.querySelector('[data-panel-title]').textContent   = p.name;
+    panel.querySelector('[data-panel-coords]').textContent  = fmtCoords(p.coord);
+    panel.querySelector('[data-panel-body]').textContent    = p.body || '';
+    const meta = panel.querySelector('[data-panel-meta]');
+    meta.innerHTML = '';
+    Object.entries(p.meta || {}).forEach(([k, v]) => {
+      const cell = document.createElement('div');
+      cell.innerHTML = `<span class="k">${k}</span><span class="v">${v}</span>`;
+      meta.appendChild(cell);
+    });
+    const cta = panel.querySelector('[data-panel-cta]');
+    cta.innerHTML = '';
+    if (p.link) {
+      const a = document.createElement('a');
+      a.href = p.link;
+      a.innerHTML = `Read more <span aria-hidden="true">→</span>`;
+      cta.appendChild(a);
+    }
+    panel.hidden = false;
+    requestAnimationFrame(() => panel.classList.add('is-open'));
+  };
+  const closePanel = () => {
+    panel.classList.remove('is-open');
+    setTimeout(() => { panel.hidden = true; }, 350);
+  };
+  panel.querySelector('[data-panel-close]').addEventListener('click', closePanel);
+
+  const fmtCoords = (latlng) => {
+    const lat = latlng[0], lng = latlng[1];
+    const fmt = (v, hemis) => {
+      const d = Math.floor(Math.abs(v));
+      const mDec = (Math.abs(v) - d) * 60;
+      const m = Math.floor(mDec);
+      const s = ((mDec - m) * 60).toFixed(1);
+      return `${d}°${String(m).padStart(2, '0')}′${s.padStart(4, '0')}″${hemis[v >= 0 ? 0 : 1]}`;
+    };
+    return `↳ ${fmt(lat, 'NS')} · ${fmt(lng, 'EW')}`;
+  };
+
+  POINTS.forEach(p => {
+    const m = L.marker(p.coord, { icon: mkPin(p.layer, p.main) });
+    m.on('click', () => openPanel(p));
+    layerGroups[p.layer].addLayer(m);
+  });
+
+  // ---- Layer toggles ----
+  document.querySelectorAll('[data-layer]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.layer;
+      const pressed = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', String(!pressed));
+      const group = layerGroups[key];
+      if (pressed) { map.removeLayer(group); } else { map.addLayer(group); }
+    });
+  });
+
+  // Close panel when the user clicks the map background
+  map.on('click', closePanel);
+
+  // Open the main deck panel on load so the visitor sees the pattern
+  setTimeout(() => {
+    const main = POINTS.find(p => p.main);
+    if (main) openPanel(main);
+  }, 600);
+})();
+</script>
+</body>
+</html>
