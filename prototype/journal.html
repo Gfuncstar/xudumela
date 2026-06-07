@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1780330083">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=burger02">
 <style>
   .journal-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: clamp(1.5rem, 3vw, 3rem); }
   @media (max-width: 900px) { .journal-grid { grid-template-columns: 1fr 1fr; } }
@@ -42,6 +42,11 @@
     <a href="/prototype/contact.html">Visit</a>
   </nav>
   <a href="/prototype/contact.html" class="nav-cta"><span>Enquire</span></a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+  </button>
 </header>
 
 <!-- ============ HERO ============ -->
@@ -66,18 +71,6 @@
       </div>
       <span class="scroll-cue">Scroll</span>
     </div>
-  </div>
-</section>
-
-<!-- ============ Cinematic video moment ============ -->
-<section class="video-moment" aria-label="Field notes from the channel">
-  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/1660413.jpg">
-    <source data-src="/assets/videos/hero-eleven.mp4" type="video/mp4">
-  </video>
-  <div class="video-moment-scrim" aria-hidden="true"></div>
-  <div class="video-moment-line">
-    <p class="moment-line"><span class="ml-row">Field notes,</span><span class="ml-row italic text-primary">from the channel.</span></p>
-    <p class="moment-sub">Trackers, weather, what the bush is doing this week.</p>
   </div>
 </section>
 
@@ -157,9 +150,25 @@
       </a>
 
     </div>
+  </div>
+</section>
 
-    <div class="divider mt-4"><span class="mark">⌖</span></div>
+<!-- ============ Cinematic video moment ============ -->
+<section class="video-moment" aria-label="Field notes from the channel">
+  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/1660413.jpg">
+    <source data-src="/assets/videos/hero-eleven.mp4" type="video/mp4">
+  </video>
+  <div class="video-moment-scrim" aria-hidden="true"></div>
+  <div class="video-moment-line">
+    <p class="moment-line"><span class="ml-row">Field notes,</span><span class="ml-row italic text-primary">from the channel.</span></p>
+    <p class="moment-sub">Trackers, weather, what the bush is doing this week.</p>
+  </div>
+</section>
 
+<!-- ============ SUBSCRIBE ============ -->
+<section class="section bg-deep">
+  <div class="container">
+    <div class="divider mt-0" style="margin-bottom: 3rem;"><span class="mark">⌖</span></div>
     <div class="two-up">
       <div class="r-up">
         <span class="eyebrow" data-icon="flame">↳ Subscribe</span>
@@ -202,8 +211,10 @@
           <li><a href="/prototype/stay.html">Stay</a></li>
           <li><a href="/prototype/experiences.html">Experiences</a></li>
           <li><a href="/prototype/conservancy.html">Conservation</a></li>
-          <li><a href="/prototype/journal.html">Journal</a></li>
+          <li><a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/before-you-go.html">Prepare</a></li>
           <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+          <li><a href="/prototype/before-you-go.html">Before you go</a></li>
         </ul>
       </div>
       <div class="r-up d2">
@@ -233,7 +244,26 @@
   </div>
 </footer>
 
-<script src="/prototype/assets/js/site.js?v=1780330083"></script>
+<script src="/prototype/assets/js/site.js?v=burger02"></script>
+
+
+<div class="nav-overlay" id="navOverlay" aria-hidden="true" aria-label="Site navigation">
+  <nav class="nav-overlay-links">
+    <a href="/prototype/index.html" class="nav-overlay-link"><span>Conservancy</span><span class="link-num">01</span></a>
+    <a href="/prototype/stay.html" class="nav-overlay-link"><span>Stay</span><span class="link-num">02</span></a>
+    <a href="/prototype/experiences.html" class="nav-overlay-link"><span>Experiences</span><span class="link-num">03</span></a>
+    <a href="/prototype/map.html" class="nav-overlay-link"><span>Map</span><span class="link-num">04</span></a>
+    <a href="/prototype/conservancy.html" class="nav-overlay-link"><span>Conservation</span><span class="link-num">05</span></a>
+    <a href="/prototype/poachella.html" class="nav-overlay-link"><span>Poachella</span><span class="link-num">06</span></a>
+    <a href="/prototype/journal.html" class="nav-overlay-link is-active"><span>Journal</span><span class="link-num">07</span></a>
+    <a href="/prototype/before-you-go.html" class="nav-overlay-link"><span>Prepare</span><span class="link-num">08</span></a>
+    <a href="/prototype/contact.html" class="nav-overlay-link"><span>Visit</span><span class="link-num">09</span></a>
+  </nav>
+  <div class="nav-overlay-footer">
+    <a href="/prototype/contact.html" class="btn btn-solid">Enquire <span class="btn-arrow">→</span></a>
+    <span class="nav-overlay-coord">↳ 19°16′S · 22°51′E · Okavango</span>
+  </div>
+</div>
 
 </body>
 </html>

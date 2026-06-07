@@ -11,7 +11,30 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1780330083">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=burger02">
+<style>
+  .photo-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: clamp(200px, 32vh, 380px);
+    overflow: hidden;
+  }
+  .photo-strip figure {
+    margin: 0;
+    overflow: hidden;
+  }
+  .photo-strip figure img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8) saturate(0.85);
+    transition: transform 6s var(--bezier, cubic-bezier(0.22,1,0.36,1));
+  }
+  .photo-strip figure:hover img { transform: scale(1.05); }
+  @media (max-width: 600px) {
+    .photo-strip { grid-template-columns: 1fr 1fr; height: clamp(160px, 40vw, 260px); }
+    .photo-strip figure:last-child { display: none; }
+  }
+</style>
 </head>
 <body class="bg-dark">
 
@@ -25,14 +48,25 @@
     <a href="/prototype/conservancy.html">Conservation</a>
     <a href="/prototype/poachella.html" class="is-active">Poachella</a>
     <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/before-you-go.html">Prepare</a>
     <a href="/prototype/contact.html">Visit</a>
   </nav>
   <a href="https://www.quicket.co.za/events/371693-poachella-2026/" target="_blank" rel="noopener" class="nav-cta"><span>Buy Tickets</span></a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+  </button>
 </header>
 
 <!-- ============ HERO ============ -->
 <section class="hero" style="min-height: 100vh;">
-  <div class="hero-media"><img src="/assets/images/Festival-Image.jpg" alt="Poachella festival imagery"></div>
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="auto" poster="/assets/images/Festival-Image.jpg">
+      <source src="/assets/videos/hero-aerial-delta.mp4" type="video/mp4">
+      <img src="/assets/images/Festival-Image.jpg" alt="Aerial view of the Okavango Delta">
+    </video>
+  </div>
   <div class="hero-grain"></div>
   <div class="hero-inner container">
     <div><span class="eyebrow" data-icon="flame">↳ Edition 02 · Octobers in the Delta</span></div>
@@ -83,6 +117,13 @@
     </div>
   </div>
 </section>
+
+<!-- ============ PHOTO STRIP ============ -->
+<div class="photo-strip">
+  <figure><img src="/assets/images/IMG_3724.jpg" alt="Festival landscape"></figure>
+  <figure><img src="/assets/images/1660618.jpg" alt="Delta waterway at dusk"></figure>
+  <figure><img src="/assets/images/IMG_3737.jpg" alt="Campfire under the stars"></figure>
+</div>
 
 <!-- ============ TICKET TIERS ============ -->
 <section class="section bg-paper" id="tickets">
@@ -151,7 +192,7 @@
 
 <!-- ============ Cinematic video moment ============ -->
 <section class="video-moment" aria-label="Three days, one channel">
-  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/Festival-Image.jpg">
+  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/1660413.jpg">
     <source data-src="/assets/videos/hero-five.mp4" type="video/mp4">
   </video>
   <div class="video-moment-scrim" aria-hidden="true"></div>
@@ -314,6 +355,7 @@
           <li><a href="/prototype/conservancy.html">Conservation</a></li>
           <li><a href="/prototype/journal.html">Journal</a></li>
           <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+          <li><a href="/prototype/before-you-go.html">Before you go</a></li>
         </ul>
       </div>
       <div class="r-up d2">
@@ -343,7 +385,26 @@
   </div>
 </footer>
 
-<script src="/prototype/assets/js/site.js?v=1780330083"></script>
+<script src="/prototype/assets/js/site.js?v=burger02"></script>
+
+
+<div class="nav-overlay" id="navOverlay" aria-hidden="true" aria-label="Site navigation">
+  <nav class="nav-overlay-links">
+    <a href="/prototype/index.html" class="nav-overlay-link"><span>Conservancy</span><span class="link-num">01</span></a>
+    <a href="/prototype/stay.html" class="nav-overlay-link"><span>Stay</span><span class="link-num">02</span></a>
+    <a href="/prototype/experiences.html" class="nav-overlay-link"><span>Experiences</span><span class="link-num">03</span></a>
+    <a href="/prototype/map.html" class="nav-overlay-link"><span>Map</span><span class="link-num">04</span></a>
+    <a href="/prototype/conservancy.html" class="nav-overlay-link"><span>Conservation</span><span class="link-num">05</span></a>
+    <a href="/prototype/poachella.html" class="nav-overlay-link is-active"><span>Poachella</span><span class="link-num">06</span></a>
+    <a href="/prototype/journal.html" class="nav-overlay-link"><span>Journal</span><span class="link-num">07</span></a>
+    <a href="/prototype/before-you-go.html" class="nav-overlay-link"><span>Prepare</span><span class="link-num">08</span></a>
+    <a href="/prototype/contact.html" class="nav-overlay-link"><span>Visit</span><span class="link-num">09</span></a>
+  </nav>
+  <div class="nav-overlay-footer">
+    <a href="/prototype/contact.html" class="btn btn-solid">Enquire <span class="btn-arrow">→</span></a>
+    <span class="nav-overlay-coord">↳ 19°16′S · 22°51′E · Okavango</span>
+  </div>
+</div>
 
 </body>
 </html>

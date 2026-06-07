@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Before You Go — Xudumela · What to pack, what to expect, what to know</title>
+<meta name="description" content="Power, water, signal, what to wear, what to leave behind. A practical guide for guests arriving at Xudumela on the Xudum Channel.">
+<meta property="og:title" content="Before You Go — Xudumela Conservancy">
+<meta property="og:image" content="/assets/images/1660413.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=burger02">
+<style>
+  /* Pack list grid */
+  .pack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: clamp(2rem, 4vh, 3rem);
+  }
+  .pack-card {
+    background: var(--bg-dark);
+    padding: 1.8rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .pack-card .pc-icon {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.4rem;
+    color: var(--primary);
+  }
+  .pack-card .pc-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .pack-card .pc-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .pack-card .pc-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.1;
+    color: var(--text-light);
+  }
+  .pack-card .pc-body {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    opacity: 0.62;
+    margin-top: 0.2rem;
+  }
+  .pack-card .pc-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--primary);
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--rule);
+    text-transform: uppercase;
+  }
+
+  /* Checklist */
+  .checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.5rem 2.5rem;
+    margin-top: 2rem;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.93rem;
+    line-height: 1.4;
+    color: var(--text-light);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .check-item::before {
+    content: '—';
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--primary);
+    flex: none;
+    margin-top: 0.15rem;
+  }
+  .check-item.no { color: rgba(205, 90, 74, 0.85); }
+  .check-item.no::before { content: '✕'; color: rgba(205, 90, 74, 0.7); }
+
+  /* Warning callout */
+  .callout {
+    border-left: 2px solid var(--primary);
+    padding: 1.2rem 1.6rem;
+    background: rgba(185, 157, 117, 0.06);
+    margin-top: 2rem;
+  }
+  .callout .callout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+  }
+  .callout p {
+    font-family: var(--font-body);
+    font-size: 0.93rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  /* Section nav anchors */
+  .section-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  .section-nav a {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    text-decoration: none;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--rule);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .section-nav a:hover { border-color: var(--primary); color: var(--primary); }
+
+  @media (max-width: 700px) {
+    .pack-grid { grid-template-columns: 1fr; }
+    .checklist { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="bg-dark">
+
+<header class="nav-fixed">
+  <a href="/prototype/index.html" class="nav-brand">XUDUMELA</a>
+  <nav class="nav-links">
+    <a href="/prototype/index.html">Conservancy</a>
+    <a href="/prototype/stay.html">Stay</a>
+    <a href="/prototype/experiences.html">Experiences</a>
+    <a href="/prototype/map.html">Map</a>
+    <a href="/prototype/conservancy.html">Conservation</a>
+    <a href="/prototype/poachella.html">Poachella</a>
+    <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/before-you-go.html" class="is-active">Prepare</a>
+    <a href="/prototype/contact.html">Visit</a>
+  </nav>
+  <a href="/prototype/contact.html" class="nav-cta"><span>Enquire</span></a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+  </button>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="min-height: 70vh;">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="auto" poster="/assets/images/1660413.jpg">
+      <source src="/assets/videos/hero-meandering-river.mp4" type="video/mp4">
+      <img src="/assets/images/1660413.jpg" alt="Xudum Channel, Okavango Delta">
+    </video>
+  </div>
+  <div class="hero-grain"></div>
+  <div class="hero-inner container">
+    <div><span class="eyebrow" data-icon="compass">↳ Guest essentials</span></div>
+    <div>
+      <h1 class="hero-mark" data-hero-mark>BEFORE YOU GO</h1>
+      <div class="strap-tag mt-2" data-strap>
+        <span class="line"><span>Power, water, signal, clothing.</span></span>
+        <span class="line"><span>Everything you need to know</span></span>
+        <span class="line"><span>before you arrive at the channel.</span></span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div class="hero-meta">
+        <div>Malaria zone<strong>Yes — prepare</strong></div>
+        <div>Signal on site<strong>None</strong></div>
+        <div>Power<strong>Solar</strong></div>
+        <div>Luggage limit<strong>15 kg (fly-in)</strong></div>
+      </div>
+      <span class="scroll-cue">Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUICK NAV ============ -->
+<section class="section bg-deep" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+  <div class="container">
+    <div class="r-up">
+      <span class="eyebrow">Jump to a section</span>
+      <nav class="section-nav" aria-label="Page sections">
+        <a href="#power">Power &amp; charging</a>
+        <a href="#water">Water</a>
+        <a href="#signal">Signal &amp; WiFi</a>
+        <a href="#clothing">What to wear</a>
+        <a href="#health">Health &amp; malaria</a>
+        <a href="#money">Money</a>
+        <a href="#luggage">Luggage</a>
+        <a href="#pack-list">Pack list</a>
+        <a href="#leave-behind">What not to bring</a>
+        <a href="#on-arrival">On arrival</a>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POWER ============ -->
+<section class="section bg-deep" id="power">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="leaf">01 / Power &amp; charging</span>
+        <h2 class="display-lg mt-2">Solar,<br>with backup.</h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>Xudumela runs on a solar array with an inverter and battery bank. Power is reliable but not unlimited. Each tent is equipped with two USB-A sockets and one standard South African 3-pin power point (15A). Power is available round the clock, but high-draw appliances — kettles, hair dryers, travel irons — are not supported on any socket.</p>
+        <p class="mt-2">The main deck has additional charging points and is the best place for laptop work. Bring a small power bank for daytime use on experiences, where you will be away from the tent for three to five hours at a stretch.</p>
+      </div>
+    </div>
+    <div class="pack-grid">
+      <div class="pack-card r-up">
+        <div class="pc-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+        <span class="pc-label">Each tent</span>
+        <div class="pc-title">2× USB-A + 1× 3-pin</div>
+        <p class="pc-body">Two USB-A ports (5V / 2A each) and one SA three-pin socket. Adequate for phones, cameras, and CPAP machines.</p>
+        <span class="pc-note">↳ No kettles or hair dryers</span>
+      </div>
+      <div class="pack-card r-up d1">
+        <div class="pc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+        <span class="pc-label">Source</span>
+        <div class="pc-title">Solar + inverter</div>
+        <p class="pc-body">The camp is fully off-grid. Power output varies slightly by season and cloud cover, but daily charging of phones, cameras, and laptops is reliably covered.</p>
+        <span class="pc-note">↳ Available 24 hours</span>
+      </div>
+      <div class="pack-card r-up d2">
+        <div class="pc-icon"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></div>
+        <span class="pc-label">Recommended</span>
+        <div class="pc-title">Bring a power bank</div>
+        <p class="pc-body">Safari experiences run from first light until mid-morning and again from late afternoon into dusk. A 10,000 mAh power bank covers a full day away from the tent.</p>
+        <span class="pc-note">↳ Carried in the day pack</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WATER ============ -->
+<section class="section bg-paper" id="water">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow paper" data-icon="leaf">02 / Water</span>
+        <h2 class="display-lg mt-2 paper">Safe, hot,<br>and cold.</h2>
+      </div>
+      <div class="right brochure paper r-up d1">
+        <p>Drinking water at Xudumela is drawn from a borehole and passed through UV filtration. It is safe to drink directly from the tap. We do not provide bottled water — guests are issued a reusable camp bottle on arrival and refill points are on the main deck and at each tent.</p>
+        <p class="mt-2">Hot showers are available morning and evening. The solar-heated water system provides reliable hot water in the dry season; in the wet season (November–April), particularly after overcast days, temperatures can drop. Cold water is available at all times.</p>
+      </div>
+    </div>
+    <div class="callout r-up">
+      <div class="callout-label">Important — do not swim in the channel</div>
+      <p>The Xudum Channel holds a resident hippo pod and year-round crocodile activity. Swimming is not permitted at any point along the channel bank or in any waterway on the conservancy. The plunge pool at the main deck is the only safe swimming on-site.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SIGNAL ============ -->
+<section class="section bg-deep" id="signal">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="compass">03 / Signal &amp; WiFi</span>
+        <h2 class="display-lg mt-2">Genuinely<br>off-grid.</h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>There is no mobile signal at Xudumela. Mascom and Orange Botswana coverage drops north of the main road from Maun; the camp sits approximately 25 km beyond the last reliable signal point. This is not a limitation — it is one of the reasons guests return.</p>
+        <p class="mt-2">WiFi is available on the main deck only, via a Starlink satellite connection. Typical speeds run 15–40 Mbps. The connection is shared and performs well for email, messaging, and moderate browsing. Zoom calls and video streaming are possible from the deck during off-peak hours (early morning and late evening). WiFi does not reach the tents.</p>
+      </div>
+    </div>
+    <div class="pack-grid">
+      <div class="pack-card r-up">
+        <span class="pc-label">Mobile signal</span>
+        <div class="pc-title">None on site</div>
+        <p class="pc-body">Alert contacts before departure. Leave an emergency contact number with your next of kin — Xudumela field manager can be reached on a camp satellite phone in any emergency.</p>
+        <span class="pc-note">↳ Satellite phone available on request</span>
+      </div>
+      <div class="pack-card r-up d1">
+        <span class="pc-label">WiFi</span>
+        <div class="pc-title">Main deck only</div>
+        <p class="pc-body">Starlink connection. Reliable for messaging and email. Works for video calls early morning and evening. Not available from tents or anywhere on the walking routes.</p>
+        <span class="pc-note">↳ 15–40 Mbps shared</span>
+      </div>
+      <div class="pack-card r-up d2">
+        <span class="pc-label">Tip</span>
+        <div class="pc-title">Download before you arrive</div>
+        <p class="pc-body">Spotify playlists, podcasts, e-books, offline maps, and any work documents you may need. The camp has a small library for guests who arrive unprepared.</p>
+        <span class="pc-note">↳ Offline maps cover the whole delta</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOTHING ============ -->
+<section class="section bg-olive" id="clothing">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" style="color: var(--paper);" data-icon="sun">04 / What to wear</span>
+        <h2 class="display-lg mt-2">Neutral tones.<br>Layers for dawn.</h2>
+      </div>
+      <div class="right brochure r-up d1" style="color: var(--bone);">
+        <p>The Delta is a working ecosystem. Your clothing choices affect what wildlife does in your presence. Neutral, muted colours — khaki, olive, sand, grey — are required for all walking activities. Guides will politely ask guests in bright or white clothing to change before any experience that involves moving on foot.</p>
+        <p class="mt-2">Temperature swings are significant. June to August mornings can reach single digits by 5:30 am at the water's edge. A fleece or light down jacket is not optional in dry-season mornings; by 10 am it will be in your day pack and not needed again until sundown.</p>
+      </div>
+    </div>
+
+    <div class="three-col mt-4">
+      <div class="r-up">
+        <div class="coords text-primary">Morning</div>
+        <h3 class="display-sm mt-1" style="color: var(--bone);">Cold. Layer up.</h3>
+        <p class="brochure mt-2" style="color: var(--bone); opacity: 0.8;">Fleece or light down over a long-sleeve base layer. Long pants. Closed shoes or trail runners. Beanie optional June–August. You will shed layers by 9 am.</p>
+      </div>
+      <div class="r-up d1">
+        <div class="coords text-primary">Midday</div>
+        <h3 class="display-sm mt-1" style="color: var(--bone);">Warm. Light fabrics.</h3>
+        <p class="brochure mt-2" style="color: var(--bone); opacity: 0.8;">T-shirt or lightweight long-sleeve (sun protection). Convertible pants or shorts. Hat and sunglasses essential year-round. SPF 50+ sunscreen — the Delta's UV index is high even in winter.</p>
+      </div>
+      <div class="r-up d2">
+        <div class="coords text-primary">Dusk</div>
+        <h3 class="display-sm mt-1" style="color: var(--bone);">Cover up. Mozzies active.</h3>
+        <p class="brochure mt-2" style="color: var(--bone); opacity: 0.8;">Long sleeves and long pants for the evening — both for warmth and because malaria mosquitoes are most active from dusk onward. Light, loose fabrics are cooler than they look.</p>
+      </div>
+    </div>
+
+    <div class="callout r-up mt-3" style="border-left-color: rgba(185,157,117,0.5); background: rgba(0,0,0,0.2);">
+      <div class="callout-label" style="color: var(--primary);">Do not pack</div>
+      <p style="color: var(--bone);">Bright colours (red, orange, royal blue, yellow) on any walking experience. Heavy cologne or perfume — scent disturbs wildlife and attracts insects. Black clothing in wet season — tsetse flies are specifically attracted to black fabric.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HEALTH ============ -->
+<section class="section bg-paper" id="health">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow paper" data-icon="leaf">05 / Health &amp; malaria</span>
+        <h2 class="display-lg mt-2 paper">Prepare four<br>weeks ahead.</h2>
+      </div>
+      <div class="right brochure paper r-up d1">
+        <p>The Okavango Delta is a malarial zone. Malaria prophylaxis is strongly recommended for all guests. Consult your GP or a travel health clinic at least four weeks before travel to discuss the right prophylaxis for your itinerary and medical history — options include Malarone, Doxycycline, and Lariam.</p>
+        <p class="mt-2">Medical evacuation insurance is strongly recommended. Okavango Air Rescue provides emergency helicopter evacuation cover in the Delta; however, medical costs are the guest's responsibility and can be significant. Most travel insurance policies cover emergency evacuation — check yours before departure.</p>
+      </div>
+    </div>
+
+    <div class="info-grid r-up mt-3">
+      <div class="info-cell">
+        <span class="label">Malaria zone</span>
+        <span class="value">Yes</span>
+        <span class="note">Prophylaxis recommended. Consult GP 4 weeks before travel.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Yellow fever</span>
+        <span class="value">Not required</span>
+        <span class="note">Unless arriving directly from an endemic country. Check your routing.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Medical standby</span>
+        <span class="value">Okavango Air Rescue</span>
+        <span class="note">Emergency helicopter evacuation covers the full Delta region.</span>
+      </div>
+      <div class="info-cell">
+        <span class="label">Nearest hospital</span>
+        <span class="value">Maun — 25 min</span>
+        <span class="note">Letsholathebe II Memorial Hospital. 24h emergency department.</span>
+      </div>
+    </div>
+
+    <div class="callout r-up">
+      <div class="callout-label">Bring with you</div>
+      <p>Any prescription medication in sufficient supply for your stay plus three extra days in case of travel disruption. A personal first-aid kit with: antihistamine, immodium, oral rehydration sachets, plasters, antiseptic, and any personal allergy medication. DEET-based insect repellent (30–50% DEET) for use at dusk and dawn.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MONEY ============ -->
+<section class="section bg-deep" id="money">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="map">06 / Money &amp; payments</span>
+        <h2 class="display-lg mt-2">Card accepted.<br>Pula preferred.</h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>Accommodation and the conservation levy are payable by Visa or Mastercard. Experiences, sundowner drinks, and extras are payable by card or cash. Pula (BWP) is the preferred currency for any cash transactions on site; ZAR is accepted at an approximate exchange rate but not as favourable as using Pula. USD is not accepted on site.</p>
+        <p class="mt-2">Stock up on Pula in Maun before departure. ATMs in Maun: Standard Chartered (Airport Road), FNB (Mall), Barclays (town centre). All dispense Pula. Most work with international Visa and Mastercard; Amex has limited acceptance. Draw what you need — the camp transfer north takes around 25 minutes and the road is good, but there are no ATMs at the channel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LUGGAGE ============ -->
+<section class="section bg-deep" id="luggage" style="border-top: 1px solid var(--rule);">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="compass">07 / Luggage</span>
+        <h2 class="display-lg mt-2">Soft bags only<br>if flying in.</h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>If your booking includes a light-aircraft transfer into the Delta, you are subject to a strict 15 kg total weight limit per person, including hand luggage. Hard-shell suitcases and large rigid bags cannot be loaded onto Cessna 206 or similar aircraft — soft duffel bags, backpacks, or soft-shell rolling bags that compress are the requirement.</p>
+        <p class="mt-2">Guests driving from Maun have no luggage restrictions. Standard road transfer from Maun takes approximately 25 minutes on a good dirt road, and your vehicle can carry any size of luggage.</p>
+      </div>
+    </div>
+
+    <div class="pack-grid">
+      <div class="pack-card r-up">
+        <span class="pc-label">Light aircraft</span>
+        <div class="pc-title">15 kg total per person</div>
+        <p class="pc-body">Soft bags only. This covers everything — main bag plus camera bag plus anything you carry on board. Overweight bags may not be loaded and will be stored in Maun at the Duck Inn.</p>
+        <span class="pc-note">↳ Checked strictly at the airstrip</span>
+      </div>
+      <div class="pack-card r-up d1">
+        <span class="pc-label">Road transfer</span>
+        <div class="pc-title">No restriction</div>
+        <p class="pc-body">Transfer from Maun in a camp vehicle. No luggage limit. Hard-shell cases, large rolling bags, cooler boxes — all fine. Transfer is included in accommodation rate.</p>
+        <span class="pc-note">↳ Approximately 25 min from Maun</span>
+      </div>
+      <div class="pack-card r-up d2">
+        <span class="pc-label">Valuables</span>
+        <div class="pc-title">Leave what you can</div>
+        <p class="pc-body">Tents have lockable storage. The main deck has a small safe. Passports and flight documents should be kept in the main deck safe overnight — bring copies for any day activities.</p>
+        <span class="pc-note">↳ Safe on main deck, 24h</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CINEMATIC BREAK ============ -->
+<section class="video-moment" aria-label="The channel at dusk">
+  <video data-lazy muted loop playsinline preload="metadata" poster="/assets/images/IMG_3724.jpg">
+    <source data-src="/assets/videos/hero-eight.mp4" type="video/mp4">
+  </video>
+  <div class="video-moment-scrim" aria-hidden="true"></div>
+  <div class="video-moment-line">
+    <p class="moment-line"><span class="ml-row">Prepared well,</span><span class="ml-row italic text-primary">you arrive lighter.</span></p>
+    <p class="moment-sub">Everything you need. Nothing that will get in the way.</p>
+  </div>
+</section>
+
+<!-- ============ PACK LIST ============ -->
+<section class="section bg-deep" id="pack-list">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="quill">08 / What to pack</span>
+        <h2 class="display-lg mt-2">The full<br>checklist.</h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>This list covers a standard three- to five-night stay. Laundry is done daily by the camp team — packed light is packed right. If you are on a fly-in transfer, remember your 15 kg limit. Anything critical that you forget can usually be sourced in Maun, but not at the camp itself.</p>
+      </div>
+    </div>
+
+    <div class="checklist r-up">
+      <div class="check-item">Neutral safari clothing (khaki, olive, sand)</div>
+      <div class="check-item">Fleece or light down jacket (essential Jun–Aug)</div>
+      <div class="check-item">Long-sleeve base layers × 2</div>
+      <div class="check-item">Long pants × 2 (one for walking, one for evenings)</div>
+      <div class="check-item">Shorts × 1–2 (for around camp)</div>
+      <div class="check-item">Closed-toe walking shoes or trail runners</div>
+      <div class="check-item">Sandals for camp</div>
+      <div class="check-item">Wide-brim hat (essential — no shade on the water)</div>
+      <div class="check-item">Sunglasses</div>
+      <div class="check-item">SPF 50+ sunscreen (face and body)</div>
+      <div class="check-item">Lip balm with SPF</div>
+      <div class="check-item">DEET insect repellent (30–50% DEET)</div>
+      <div class="check-item">Malaria prophylaxis (started before travel — see your GP)</div>
+      <div class="check-item">Prescription medication + 3-day surplus</div>
+      <div class="check-item">Personal first-aid kit (antihistamine, plasters, immodium)</div>
+      <div class="check-item">Binoculars (essential for birding and game-watching)</div>
+      <div class="check-item">Headlamp or small torch (paths are unlit at night)</div>
+      <div class="check-item">Camera with long telephoto lens if shooting wildlife</div>
+      <div class="check-item">Extra memory cards and camera batteries</div>
+      <div class="check-item">Power bank (10,000 mAh minimum recommended)</div>
+      <div class="check-item">SA plug adapter if required (three-pin 15A)</div>
+      <div class="check-item">Reusable water bottle (provided on arrival — bring your own if preferred)</div>
+      <div class="check-item">Small day pack for experiences</div>
+      <div class="check-item">Travel insurance documents (policy number + emergency line)</div>
+      <div class="check-item">Passport + photocopies</div>
+      <div class="check-item">Botswana Pula cash for extras</div>
+      <div class="check-item">Light rain jacket (Nov–Apr wet season)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT NOT TO BRING ============ -->
+<section class="section bg-paper" id="leave-behind">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow paper" data-icon="quill">09 / What not to bring</span>
+        <h2 class="display-lg mt-2 paper">Leave some<br>things behind.</h2>
+      </div>
+      <div class="right brochure paper r-up d1">
+        <p>Some items are not appropriate in a working conservancy — either because they affect wildlife, violate Botswana regulations, or create unnecessary weight on fly-in routes. This list is not exhaustive; if in doubt, ask before you pack.</p>
+      </div>
+    </div>
+
+    <div class="checklist r-up">
+      <div class="check-item no">Bright colours (red, orange, blue, yellow) — for walking experiences</div>
+      <div class="check-item no">Cologne, perfume, or heavy fragrance — disturbs wildlife</div>
+      <div class="check-item no">Single-use plastic bags — illegal in Botswana, confiscated at borders</div>
+      <div class="check-item no">Drones — prohibited without a CAAB permit. Permits take 6–8 weeks to obtain.</div>
+      <div class="check-item no">Firearms — not permitted in the conservancy under any circumstances</div>
+      <div class="check-item no">Black clothing for wet-season walking — attracts tsetse flies significantly</div>
+      <div class="check-item no">Hard-shell suitcases (fly-in guests only) — cannot be loaded onto light aircraft</div>
+      <div class="check-item no">Hair dryers, travel kettles, steam irons — power load not supported</div>
+      <div class="check-item no">Flash photography on night drives — permanently prohibited</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ON ARRIVAL ============ -->
+<section class="section bg-deep" id="on-arrival">
+  <div class="container">
+    <div class="section-head">
+      <div class="r-up">
+        <span class="eyebrow" data-icon="map">10 / On arrival</span>
+        <h2 class="display-lg mt-2">What happens<br>when you land.</h2>
+      </div>
+      <div class="right brochure r-up d1">
+        <p>Transfer guests are collected from the Duck Inn in Maun at a pre-arranged time. If arriving by light aircraft, a camp vehicle meets you at Hunda or Khwai airstrip and drives you to the channel — approximately 45 minutes on a dirt track. Self-drive guests follow directions on the booking confirmation; GPS coordinates are provided in advance.</p>
+      </div>
+    </div>
+
+    <div class="three-col mt-3">
+      <div class="r-up">
+        <div class="coords text-primary">On arrival</div>
+        <h3 class="display-sm mt-1">Orientation walk</h3>
+        <p class="brochure mt-2">Within thirty minutes of reaching camp, a guide walks every new guest around the property: the path to the channel, the tent, the emergency procedures, the crocodile protocol for the bank, and the sign-in board for the next day's activities.</p>
+      </div>
+      <div class="r-up d1">
+        <div class="coords text-primary">First evening</div>
+        <h3 class="display-sm mt-1">Sundowner briefing</h3>
+        <p class="brochure mt-2">The field manager hosts a short briefing on the main deck at 17:30 on your first evening. Weather for the week, what the trackers have seen in the past few days, and any notes on wildlife movement near the boundary.</p>
+      </div>
+      <div class="r-up d2">
+        <div class="coords text-primary">Booking activities</div>
+        <h3 class="display-sm mt-1">Sign-up at the deck</h3>
+        <p class="brochure mt-2">Experiences are booked via a physical sign-up sheet on the main deck, posted each evening for the following day. Early bird gets the mokoro. Maximum group sizes apply — first come, first served on popular experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LETTER / CTA ============ -->
+<section class="section bg-paper-soft">
+  <div class="container-tight">
+    <div class="r-up center"><span class="eyebrow center">Ready to come?</span></div>
+    <div class="letter mt-3 r-up d1">
+      <blockquote>
+        Pack light, arrive curious, leave the agenda in Maun. The channel will do the rest.
+      </blockquote>
+      <div class="signature">— Field manager, Xudumela · 2026</div>
+    </div>
+    <div class="r-up d2 center mt-3" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="/prototype/contact.html" class="btn btn-paper">Enquire now <span class="btn-arrow">→</span></a>
+      <a href="/prototype/stay.html" class="btn btn-paper">View accommodation <span class="btn-arrow">→</span></a>
+      <a href="/prototype/map.html" class="btn btn-paper">Getting here <span class="btn-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-foot">
+  <div class="container">
+    <div class="brand-block r-up">
+      <div class="foot-coords">
+        <span>↳ 20°02′32.7″S · 23°05′10.4″E</span>
+        <span>Okavango Delta · Botswana</span>
+        <span>EST. 2026</span>
+      </div>
+    </div>
+
+    <div class="foot-top">
+      <div class="r-up d1">
+        <h4>The Conservancy</h4>
+        <ul>
+          <li><a href="/prototype/index.html">Home</a></li>
+          <li><a href="/prototype/stay.html">Stay</a></li>
+          <li><a href="/prototype/experiences.html">Experiences</a></li>
+          <li><a href="/prototype/conservancy.html">Conservation</a></li>
+          <li><a href="/prototype/journal.html">Journal</a></li>
+          <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+          <li><a href="/prototype/before-you-go.html">Before you go</a></li>
+        </ul>
+      </div>
+      <div class="r-up d2">
+        <h4>Festival</h4>
+        <ul>
+          <li><a href="/prototype/poachella.html">Poachella 2026</a></li>
+          <li><a href="https://www.quicket.co.za/events/371693-poachella-2026/" target="_blank" rel="noopener">Buy tickets</a></li>
+          <li><a href="/prototype/poachella.html#lineup">Line‑up</a></li>
+          <li><a href="/prototype/poachella.html#faq">Festival FAQ</a></li>
+        </ul>
+      </div>
+      <div class="r-up d3">
+        <h4>Reach Out</h4>
+        <ul>
+          <li><a href="mailto:bookings@xudumela.africa">bookings@xudumela.africa</a></li>
+          <li><a href="tel:+26773893375">+267 73 893 375</a></li>
+          <li><a href="https://wa.me/26773893375" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.instagram.com/xudumela_conservancy" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="/prototype/contact.html">Plan your visit</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span data-year>2026</span> Xudumela Conservancy &amp; Camp Grounds</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/prototype/assets/js/site.js?v=burger02"></script>
+
+
+<div class="nav-overlay" id="navOverlay" aria-hidden="true" aria-label="Site navigation">
+  <nav class="nav-overlay-links">
+    <a href="/prototype/index.html" class="nav-overlay-link"><span>Conservancy</span><span class="link-num">01</span></a>
+    <a href="/prototype/stay.html" class="nav-overlay-link"><span>Stay</span><span class="link-num">02</span></a>
+    <a href="/prototype/experiences.html" class="nav-overlay-link"><span>Experiences</span><span class="link-num">03</span></a>
+    <a href="/prototype/map.html" class="nav-overlay-link"><span>Map</span><span class="link-num">04</span></a>
+    <a href="/prototype/conservancy.html" class="nav-overlay-link"><span>Conservation</span><span class="link-num">05</span></a>
+    <a href="/prototype/poachella.html" class="nav-overlay-link"><span>Poachella</span><span class="link-num">06</span></a>
+    <a href="/prototype/journal.html" class="nav-overlay-link"><span>Journal</span><span class="link-num">07</span></a>
+    <a href="/prototype/before-you-go.html" class="nav-overlay-link is-active"><span>Prepare</span><span class="link-num">08</span></a>
+    <a href="/prototype/contact.html" class="nav-overlay-link"><span>Visit</span><span class="link-num">09</span></a>
+  </nav>
+  <div class="nav-overlay-footer">
+    <a href="/prototype/contact.html" class="btn btn-solid">Enquire <span class="btn-arrow">→</span></a>
+    <span class="nav-overlay-coord">↳ 19°16′S · 22°51′E · Okavango</span>
+  </div>
+</div>
+
+</body>
+</html>

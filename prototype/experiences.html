@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&family=JetBrains+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<link rel="stylesheet" href="/prototype/assets/css/site.css?v=1780330083">
+<link rel="stylesheet" href="/prototype/assets/css/site.css?v=burger02">
 <style>
   .leaflet-container { background: #0d0c08; font-family: var(--font-body); }
   .leaflet-tile { filter: brightness(0.78) saturate(0.85) contrast(1.04); }
@@ -69,9 +69,15 @@
     <a href="/prototype/conservancy.html">Conservation</a>
     <a href="/prototype/poachella.html">Poachella</a>
     <a href="/prototype/journal.html">Journal</a>
+    <a href="/prototype/before-you-go.html">Prepare</a>
     <a href="/prototype/contact.html">Visit</a>
   </nav>
   <a href="/prototype/contact.html" class="nav-cta"><span>Enquire</span></a>
+  <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false" aria-controls="navOverlay">
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+    <span class="nav-burger-bar"></span>
+  </button>
 </header>
 
 <!-- ============ HERO ============ -->
@@ -281,6 +287,7 @@
           <li><a href="/prototype/conservancy.html">Conservation</a></li>
           <li><a href="/prototype/journal.html">Journal</a></li>
           <li><a href="/prototype/weather.html">Weather &amp; seasons</a></li>
+          <li><a href="/prototype/before-you-go.html">Before you go</a></li>
         </ul>
       </div>
       <div class="r-up d2">
@@ -311,7 +318,7 @@
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="/prototype/assets/js/site.js?v=1780330083"></script>
+<script src="/prototype/assets/js/site.js?v=burger02"></script>
 <script>
 (() => {
   const center = [-19.273, 22.847];
@@ -355,6 +362,25 @@
   }, 100);
 })();
 </script>
+
+
+<div class="nav-overlay" id="navOverlay" aria-hidden="true" aria-label="Site navigation">
+  <nav class="nav-overlay-links">
+    <a href="/prototype/index.html" class="nav-overlay-link"><span>Conservancy</span><span class="link-num">01</span></a>
+    <a href="/prototype/stay.html" class="nav-overlay-link"><span>Stay</span><span class="link-num">02</span></a>
+    <a href="/prototype/experiences.html" class="nav-overlay-link is-active"><span>Experiences</span><span class="link-num">03</span></a>
+    <a href="/prototype/map.html" class="nav-overlay-link"><span>Map</span><span class="link-num">04</span></a>
+    <a href="/prototype/conservancy.html" class="nav-overlay-link"><span>Conservation</span><span class="link-num">05</span></a>
+    <a href="/prototype/poachella.html" class="nav-overlay-link"><span>Poachella</span><span class="link-num">06</span></a>
+    <a href="/prototype/journal.html" class="nav-overlay-link"><span>Journal</span><span class="link-num">07</span></a>
+    <a href="/prototype/before-you-go.html" class="nav-overlay-link"><span>Prepare</span><span class="link-num">08</span></a>
+    <a href="/prototype/contact.html" class="nav-overlay-link"><span>Visit</span><span class="link-num">09</span></a>
+  </nav>
+  <div class="nav-overlay-footer">
+    <a href="/prototype/contact.html" class="btn btn-solid">Enquire <span class="btn-arrow">→</span></a>
+    <span class="nav-overlay-coord">↳ 19°16′S · 22°51′E · Okavango</span>
+  </div>
+</div>
 
 </body>
 </html>
